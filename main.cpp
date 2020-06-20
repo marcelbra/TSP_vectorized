@@ -16,7 +16,7 @@ int main(int argc, char *argv[])
     //w.show();
 
 
-    string filename = "/Users/olemaiwald/Desktop/TSP_vectorized/test1.txt";
+    string filename = "/Users/marcelbraasch/Documents/Developer/TSP_vectorized/test1.txt";
 
     // get number of lines from test file
     int number_of_lines = 0;
@@ -41,7 +41,7 @@ int main(int argc, char *argv[])
         cityX[i-1] = x_coord;
         cityY[i-1] = y_coord;
     }
-    cout << "break";
+
     // initialize net and run
     ElasticNetwork en = ElasticNetwork(1.0, 1.0, 0.1, cityX, cityY, number_of_lines);
     TStopwatch timer;

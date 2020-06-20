@@ -75,9 +75,9 @@ void ElasticNetwork::evolution(){
 
 
     while ((evolution_round < 10000) && (get_max_dist_cities_point() > 0.009)) {
-        if (evolution_round % 1 == 0) cout << "evolution_round: " << evolution_round << ", max dist: " << get_max_dist_cities_point() << endl;
+        if (evolution_round % 1000 == 0) cout << "evolution_round: " << evolution_round << ", max dist: " << get_max_dist_cities_point() << endl;
 
-        std::cout << "NUmcities:" << numOfCities << endl;
+
         evolution_round += 1;
         if (evolution_round % K_update == 0) {
             K = max(0.01, 0.99*K);
@@ -86,15 +86,11 @@ void ElasticNetwork::evolution(){
 
         // calculate v_ia:
         // for every city i:
+        
         for (int i = 0; i < numOfCities; ++i) {
-            
-
-            std::cout << "i: " << i;
-            
-            for (int l = 0; l < 1000; l++) {
-                std::cout << "l: " << l;
-                int denominator = 0;
-                for(int j=0; i<num_points; j+=fvecLen) {
+            denominator = 0.0;
+            for (int l = 0; l < 100; l++) {
+                for(int j=0; j<num_points; j+=fvecLen) {
                     fvec& pointsXVec = reinterpret_cast<fvec&>(pointsX[j]);
                     fvec& pointsYVec = reinterpret_cast<fvec&>(pointsY[j]);
                     fvec& citiesXVec = reinterpret_cast<fvec&>(cityX[i]);
@@ -248,6 +244,8 @@ float* ElasticNetwork::get_roundtrip() {
             if (euclidian_dist(cityX[i], cityY[i], pointsX[a], pointsY[a]) < min_dist_to_city) {
                 min_dist_to_city = euclidian_dist(cityX[i], cityY[i], pointsX[a], pointsY[a]);
                 closest_city_index = i;
+            } else {
+                closest_city_index = 0;
             }
             roundtrip[a] = closest_city_index + 1; // in Testfällen fangen Städte mit 1 an
         }
