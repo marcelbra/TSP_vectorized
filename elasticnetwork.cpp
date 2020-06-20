@@ -3,6 +3,7 @@
 #include "vectors/P4_F32vec4.h"
 #include <cstdlib>
 
+// Test
 
 ElasticNetwork::ElasticNetwork(float alpha, float beta, float K, float* cityX, float* cityY, int numOfCities){
     this->alpha = alpha;
