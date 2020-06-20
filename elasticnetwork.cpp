@@ -1,6 +1,7 @@
 #include "elasticnetwork.h"
 #include "math.h"
 #include "vectors/P4_F32vec4.h"
+#include <cstdlib>
 
 
 ElasticNetwork::ElasticNetwork(float alpha, float beta, float K, float* cityX, float* cityY, int numOfCities){
@@ -24,8 +25,7 @@ ElasticNetwork::ElasticNetwork(float alpha, float beta, float K, float* cityX, f
 }
 
 ElasticNetwork::~ElasticNetwork(){
-    delete [] cityX;
-    delete [] cityY;
+
     delete [] pointsX;
     delete [] pointsY;
 }
@@ -74,8 +74,9 @@ void ElasticNetwork::evolution(){
 
 
     while ((evolution_round < 10000) && (get_max_dist_cities_point() > 0.009)) {
-        if (evolution_round % 1000 == 0) cout << "evolution_round: " << evolution_round << ", max dist: " << get_max_dist_cities_point() << endl;
+        if (evolution_round % 1 == 0) cout << "evolution_round: " << evolution_round << ", max dist: " << get_max_dist_cities_point() << endl;
 
+        std::cout << "NUmcities:" << numOfCities << endl;
         evolution_round += 1;
         if (evolution_round % K_update == 0) {
             K = max(0.01, 0.99*K);
@@ -85,44 +86,26 @@ void ElasticNetwork::evolution(){
         // calculate v_ia:
         // for every city i:
         for (int i = 0; i < numOfCities; ++i) {
+            
 
-
-
-
-
-
-
-
-
-
-
-
-
-            int denominator = 0;
-            for(int j=0; i<num_points; j+=fvecLen) {
-                fvec& pointsXVec = reinterpret_cast<fvec&>(pointsX[j]);
-                fvec& pointsYVec = reinterpret_cast<fvec&>(pointsY[j]);
-                fvec& citiesXVec = reinterpret_cast<fvec&>(cityX[i]);
-                fvec& citiesYVec = reinterpret_cast<fvec&>(cityY[i]);
-                fvec& tVec = reinterpret_cast<fvec&>(T);
-                fvec& denomSummandsVec = reinterpret_cast<fvec&>(T); // dummy target vec which needs to initalized
-                denomSummandsVec = calc_denom(pointsXVec, pointsYVec, citiesXVec, citiesYVec, tVec);
-                for (int k = 0; k<fvecLen; k++) {
-                    denominator += denomSummands[k];
+            std::cout << "i: " << i;
+            
+            for (int l = 0; l < 1000; l++) {
+                std::cout << "l: " << l;
+                int denominator = 0;
+                for(int j=0; i<num_points; j+=fvecLen) {
+                    fvec& pointsXVec = reinterpret_cast<fvec&>(pointsX[j]);
+                    fvec& pointsYVec = reinterpret_cast<fvec&>(pointsY[j]);
+                    fvec& citiesXVec = reinterpret_cast<fvec&>(cityX[i]);
+                    fvec& citiesYVec = reinterpret_cast<fvec&>(cityY[i]);
+                    fvec& tVec = reinterpret_cast<fvec&>(T);
+                    fvec& denomSummandsVec = reinterpret_cast<fvec&>(T); // dummy target vec which needs to initalized
+                    denomSummandsVec = calc_denom(pointsXVec, pointsYVec, citiesXVec, citiesYVec, tVec);
+                    for (int k = 0; k<fvecLen; k++) {
+                        denominator += denomSummands[k];
+                    }
                 }
             }
-
-
-
-
-
-
-
-
-
-
-
-
 
 
             // for every point a:
@@ -184,7 +167,7 @@ void ElasticNetwork::construct_net(){
     for(int i = 1; i < num_points; i++){
         pointsX[i] = -radius * sin(i*step);
         pointsY[i] = radius * cos(i*step);
-        cout << "X " << pointsX[i] << " Y " << pointsY[i] << endl;
+        // cout << "X " << pointsX[i] << " Y " << pointsY[i] << endl;
     }
 
     normalize(cityX, numOfCities);

@@ -4,8 +4,10 @@
 #include <iostream>
 #include <fstream>
 #include <string>
+#include "TStopwatch.h"
 
-// g++ main.cpp elasticnetwork.cpp -o test
+// Command to run:
+// g++ elasticnetwork.cpp main.cpp -O3 -fno-tree-vectorize -g -msse; ./a.out
 
 int main(int argc, char *argv[])
 {
@@ -14,7 +16,7 @@ int main(int argc, char *argv[])
     //w.show();
 
 
-    string filename = "/Users/marcelbraasch/Desktop/hpc_tsp-master/test1.txt";
+    string filename = "/Users/olemaiwald/Desktop/TSP_vectorized/test1.txt";
 
     // get number of lines from test file
     int number_of_lines = 0;
@@ -39,10 +41,17 @@ int main(int argc, char *argv[])
         cityX[i-1] = x_coord;
         cityY[i-1] = y_coord;
     }
-
+    cout << "break";
     // initialize net and run
     ElasticNetwork en = ElasticNetwork(1.0, 1.0, 0.1, cityX, cityY, number_of_lines);
+    TStopwatch timer;
+
+    
+
     en.evolution();
+
+    timer.Stop();
+    cout << "Total time: " << timer.RealTime() << endl;
 
     // check results
 //    for (int i = 0; i < number_of_lines; ++i) {
