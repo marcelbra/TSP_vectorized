@@ -1,0 +1,11 @@
+scalar
+Prep[us], CPU fit/tr[us], Real fit/tr[us], CPU[sec], Real[sec] = 0.0211663	2.18012	2.18384	1.03	1.03176
+SSE
+1
+Prep[us], CPU fit/tr[us], Real fit/tr[us], CPU[sec], Real[sec] = 0.084665	2.26479	2.26732	1.07	1.0712
+2
+Prep[us], CPU fit/tr[us], Real fit/tr[us], CPU[sec], Real[sec] = 0.0423334	1.143	1.13526	0.54	0.536345
+3
+Prep[us], CPU fit/tr[us], Real fit/tr[us], CPU[sec], Real[sec] = 0	0.762002	0.750362	0.36	0.354505
+4
+Prep[us], CPU fit/tr[us], Real fit/tr[us], CPU[sec], Real[sec] = 0	0.550334	0.548345	0.26	0.259065

@@ -1,0 +1,642 @@
+128 128
+ --- opencl  ---
+1: 	
+
+
+
+Prep[us], CPU fit/tr[us], Real fit/tr[us], CPU[sec], Real[sec] = 0.0234375	1.28965	1.28965	3.81	4.18196
+2: 	
+
+
+
+Prep[us], CPU fit/tr[us], Real fit/tr[us], CPU[sec], Real[sec] = 0.0234375	0.640053	0.640053	3.79	3.33277
+3: 	
+
+
+
+Prep[us], CPU fit/tr[us], Real fit/tr[us], CPU[sec], Real[sec] = 0.0238095	0.444614	0.444614	3.8	3.08368
+4: 	
+
+
+
+Prep[us], CPU fit/tr[us], Real fit/tr[us], CPU[sec], Real[sec] = 0.0234375	0.321845	0.321845	3.79	2.93227
+5: 	
+
+
+
+Prep[us], CPU fit/tr[us], Real fit/tr[us], CPU[sec], Real[sec] = 0.032	0.269602	0.269602	3.79	2.86089
+6: 	
+
+
+
+Prep[us], CPU fit/tr[us], Real fit/tr[us], CPU[sec], Real[sec] = 0.031746	0.216764	0.216764	3.76	2.7718
+7: 	
+
+
+
+Prep[us], CPU fit/tr[us], Real fit/tr[us], CPU[sec], Real[sec] = 0.031746	0.199506	0.199506	3.79	2.76738
+8: 	
+
+
+
+Prep[us], CPU fit/tr[us], Real fit/tr[us], CPU[sec], Real[sec] = 0.03125	0.162613	0.162613	3.74	2.6974
+9: 	
+
+
+
+Prep[us], CPU fit/tr[us], Real fit/tr[us], CPU[sec], Real[sec] = 0.015873	0.153456	0.153456	3.8	2.71724
+10: 	
+
+
+
+Prep[us], CPU fit/tr[us], Real fit/tr[us], CPU[sec], Real[sec] = 0.025	0.129103	0.129103	3.75	2.63922
+11: 	
+
+
+
+Prep[us], CPU fit/tr[us], Real fit/tr[us], CPU[sec], Real[sec] = 0.0165289	0.128274	0.128274	3.78	2.65238
+12: 	
+
+
+
+Prep[us], CPU fit/tr[us], Real fit/tr[us], CPU[sec], Real[sec] = 0.025	0.107596	0.107596	3.78	2.64194
+13: 	
+
+
+
+Prep[us], CPU fit/tr[us], Real fit/tr[us], CPU[sec], Real[sec] = 0.017094	0.11269	0.11269	3.81	2.65544
+14: 	
+
+
+
+Prep[us], CPU fit/tr[us], Real fit/tr[us], CPU[sec], Real[sec] = 0.031746	0.0921151	0.0921151	3.79	2.64191
+15: 	
+
+
+
+Prep[us], CPU fit/tr[us], Real fit/tr[us], CPU[sec], Real[sec] = 0.025	0.0980759	0.0980759	3.76	2.60923
+16: 	
+
+
+
+Prep[us], CPU fit/tr[us], Real fit/tr[us], CPU[sec], Real[sec] = 0.03125	0.079812	0.079812	4.43	3.10535
+17: 	
+
+
+
+Prep[us], CPU fit/tr[us], Real fit/tr[us], CPU[sec], Real[sec] = 0.0252101	0.0985986	0.0985986	3.81	2.63633
+18: 	
+
+
+
+Prep[us], CPU fit/tr[us], Real fit/tr[us], CPU[sec], Real[sec] = 0.0238095	0.0847707	0.0847707	3.81	2.64154
+19: 	
+
+
+
+Prep[us], CPU fit/tr[us], Real fit/tr[us], CPU[sec], Real[sec] = 0.0263158	0.0931263	0.0931263	3.79	2.61438
+20: 	
+
+
+
+Prep[us], CPU fit/tr[us], Real fit/tr[us], CPU[sec], Real[sec] = 0.0166667	0.0752781	0.0752781	3.75	2.5875
+21: 	
+
+
+
+Prep[us], CPU fit/tr[us], Real fit/tr[us], CPU[sec], Real[sec] = 0.0238095	0.077281	0.077281	3.76	2.59713
+22: 	
+
+
+
+Prep[us], CPU fit/tr[us], Real fit/tr[us], CPU[sec], Real[sec] = 0.0272727	0.0683937	0.0683937	3.79	2.60199
+23: 	
+
+
+
+Prep[us], CPU fit/tr[us], Real fit/tr[us], CPU[sec], Real[sec] = 0.026087	0.0823776	0.0823776	3.81	2.62707
+24: 	
+
+
+
+Prep[us], CPU fit/tr[us], Real fit/tr[us], CPU[sec], Real[sec] = 0.025	0.0630323	0.0630323	3.79	2.59157
+25: 	
+
+
+
+Prep[us], CPU fit/tr[us], Real fit/tr[us], CPU[sec], Real[sec] = 0.024	0.0777389	0.0777389	3.79	2.62028
+26: 	
+
+
+
+Prep[us], CPU fit/tr[us], Real fit/tr[us], CPU[sec], Real[sec] = 0.0192308	0.057659	0.057659	3.77	2.55981
+27: 	
+
+
+
+Prep[us], CPU fit/tr[us], Real fit/tr[us], CPU[sec], Real[sec] = 0.0277778	0.0667807	0.0667807	3.75	2.55206
+28: 	
+
+
+
+Prep[us], CPU fit/tr[us], Real fit/tr[us], CPU[sec], Real[sec] = 0.0267857	0.0534976	0.0534976	3.73	2.53695
+29: 	
+
+
+
+Prep[us], CPU fit/tr[us], Real fit/tr[us], CPU[sec], Real[sec] = 0.0258621	0.06434	0.06434	3.72	2.55823
+30: 	
+
+
+
+Prep[us], CPU fit/tr[us], Real fit/tr[us], CPU[sec], Real[sec] = 0.025	0.0503691	0.0503691	3.77	2.57114
+31: 	
+
+
+
+Prep[us], CPU fit/tr[us], Real fit/tr[us], CPU[sec], Real[sec] = 0.0241935	0.059278	0.059278	3.79	2.58489
+32: 	
+
+
+
+Prep[us], CPU fit/tr[us], Real fit/tr[us], CPU[sec], Real[sec] = 0.0234375	0.0470892	0.0470892	3.72	2.54419
+33: 	
+
+
+
+Prep[us], CPU fit/tr[us], Real fit/tr[us], CPU[sec], Real[sec] = 0.030303	0.0639957	0.0639957	3.93	2.6709
+34: 	
+
+
+
+Prep[us], CPU fit/tr[us], Real fit/tr[us], CPU[sec], Real[sec] = 0.0294118	0.0519245	0.0519245	3.95	2.65316
+35: 	
+
+
+
+Prep[us], CPU fit/tr[us], Real fit/tr[us], CPU[sec], Real[sec] = 0.0285714	0.0664804	0.0664804	3.74	2.57693
+36: 	
+
+
+
+Prep[us], CPU fit/tr[us], Real fit/tr[us], CPU[sec], Real[sec] = 0.0277778	0.0483979	0.0483979	3.75	2.53661
+37: 	
+
+
+
+Prep[us], CPU fit/tr[us], Real fit/tr[us], CPU[sec], Real[sec] = 0.027027	0.0676794	0.0676794	3.73	2.56013
+38: 	
+
+
+
+Prep[us], CPU fit/tr[us], Real fit/tr[us], CPU[sec], Real[sec] = 0.0350877	0.0469734	0.0469734	3.74	2.53767
+39: 	
+
+
+
+Prep[us], CPU fit/tr[us], Real fit/tr[us], CPU[sec], Real[sec] = 0.025641	0.0562952	0.0562952	3.74	2.5509
+40: 	
+
+
+
+Prep[us], CPU fit/tr[us], Real fit/tr[us], CPU[sec], Real[sec] = 0.025	0.0441405	0.0441405	3.75	2.54045
+41: 	
+
+
+
+Prep[us], CPU fit/tr[us], Real fit/tr[us], CPU[sec], Real[sec] = 0.0243902	0.0523446	0.0523446	3.75	2.55197
+42: 	
+
+
+
+Prep[us], CPU fit/tr[us], Real fit/tr[us], CPU[sec], Real[sec] = 0.0238095	0.0421753	0.0421753	3.79	2.56663
+43: 	
+
+
+
+Prep[us], CPU fit/tr[us], Real fit/tr[us], CPU[sec], Real[sec] = 0.0232558	0.0653824	0.0653824	3.8	2.58373
+44: 	
+
+
+
+Prep[us], CPU fit/tr[us], Real fit/tr[us], CPU[sec], Real[sec] = 0.0227273	0.0404086	0.0404086	3.78	2.54566
+45: 	
+
+
+
+Prep[us], CPU fit/tr[us], Real fit/tr[us], CPU[sec], Real[sec] = 0.0111111	0.0521386	0.0521386	3.8	2.56278
+46: 	
+
+
+
+Prep[us], CPU fit/tr[us], Real fit/tr[us], CPU[sec], Real[sec] = 0.0217391	0.0389881	0.0389881	3.79	2.55619
+47: 	
+
+
+
+Prep[us], CPU fit/tr[us], Real fit/tr[us], CPU[sec], Real[sec] = 0.0319149	0.059765	0.059765	3.79	2.57665
+48: 	
+
+
+
+Prep[us], CPU fit/tr[us], Real fit/tr[us], CPU[sec], Real[sec] = 0.0208333	0.0367204	0.0367204	3.8	2.55408
+49: 	
+
+
+
+Prep[us], CPU fit/tr[us], Real fit/tr[us], CPU[sec], Real[sec] = 0.0306122	0.059267	0.059267	3.77	2.57327
+50: 	
+
+
+
+Prep[us], CPU fit/tr[us], Real fit/tr[us], CPU[sec], Real[sec] = 0.03	0.0445662	0.0445662	3.77	2.55322
+51: 	
+
+
+
+Prep[us], CPU fit/tr[us], Real fit/tr[us], CPU[sec], Real[sec] = 0.0196078	0.0600764	0.0600764	3.79	2.57679
+52: 	
+
+
+
+Prep[us], CPU fit/tr[us], Real fit/tr[us], CPU[sec], Real[sec] = 0.0288462	0.0425584	0.0425584	3.79	2.56539
+53: 	
+
+
+
+Prep[us], CPU fit/tr[us], Real fit/tr[us], CPU[sec], Real[sec] = 0.0283019	0.0584159	0.0584159	3.79	2.59548
+54: 	
+
+
+
+Prep[us], CPU fit/tr[us], Real fit/tr[us], CPU[sec], Real[sec] = 0.0277778	0.0411734	0.0411734	3.8	2.56732
+55: 	
+
+
+
+Prep[us], CPU fit/tr[us], Real fit/tr[us], CPU[sec], Real[sec] = 0.0272727	0.0529092	0.0529092	3.78	2.5734
+56: 	
+
+
+
+Prep[us], CPU fit/tr[us], Real fit/tr[us], CPU[sec], Real[sec] = 0.0178571	0.0398622	0.0398622	3.82	2.57584
+57: 	
+
+
+
+Prep[us], CPU fit/tr[us], Real fit/tr[us], CPU[sec], Real[sec] = 0.0263158	0.0566147	0.0566147	3.82	2.58269
+58: 	
+
+
+
+Prep[us], CPU fit/tr[us], Real fit/tr[us], CPU[sec], Real[sec] = 0.0258621	0.0391822	0.0391822	3.79	2.55929
+59: 	
+
+
+
+Prep[us], CPU fit/tr[us], Real fit/tr[us], CPU[sec], Real[sec] = 0.0254237	0.0470884	0.0470884	3.8	2.57819
+60: 	
+
+
+
+Prep[us], CPU fit/tr[us], Real fit/tr[us], CPU[sec], Real[sec] = 0.0333333	0.0378211	0.0378211	3.79	2.57555
+61: 	
+
+
+
+Prep[us], CPU fit/tr[us], Real fit/tr[us], CPU[sec], Real[sec] = 0.0245902	0.0474883	0.0474883	3.77	2.57269
+62: 	
+
+
+
+Prep[us], CPU fit/tr[us], Real fit/tr[us], CPU[sec], Real[sec] = 0.0241935	0.0366842	0.0366842	3.8	2.5615
+63: 	
+
+
+
+Prep[us], CPU fit/tr[us], Real fit/tr[us], CPU[sec], Real[sec] = 0.0238095	0.0461459	0.0461459	3.82	2.58913
+64: 	
+
+
+
+Prep[us], CPU fit/tr[us], Real fit/tr[us], CPU[sec], Real[sec] = 0.03125	0.0354663	0.0354663	3.79	2.57614
+65: 	
+
+
+
+Prep[us], CPU fit/tr[us], Real fit/tr[us], CPU[sec], Real[sec] = 0.0307692	0.0734484	0.0734484	3.79	2.56609
+66: 	
+
+
+
+Prep[us], CPU fit/tr[us], Real fit/tr[us], CPU[sec], Real[sec] = 0.030303	0.0497122	0.0497122	3.77	2.53367
+67: 	
+
+
+
+Prep[us], CPU fit/tr[us], Real fit/tr[us], CPU[sec], Real[sec] = 0.0298507	0.0698145	0.0698145	3.8	2.56789
+68: 	
+
+
+
+Prep[us], CPU fit/tr[us], Real fit/tr[us], CPU[sec], Real[sec] = 0.0441176	0.0472706	0.0472706	3.8	2.54659
+69: 	
+
+
+
+Prep[us], CPU fit/tr[us], Real fit/tr[us], CPU[sec], Real[sec] = 0.0289855	0.064645	0.064645	3.78	2.55614
+70: 	
+
+
+
+Prep[us], CPU fit/tr[us], Real fit/tr[us], CPU[sec], Real[sec] = 0.0285714	0.0467494	0.0467494	3.77	2.53602
+71: 	
+
+
+
+Prep[us], CPU fit/tr[us], Real fit/tr[us], CPU[sec], Real[sec] = 0.0140845	0.0721794	0.0721794	3.8	2.57
+72: 	
+
+
+
+Prep[us], CPU fit/tr[us], Real fit/tr[us], CPU[sec], Real[sec] = 0.0277778	0.0457442	0.0457442	3.8	2.546
+73: 	
+
+
+
+Prep[us], CPU fit/tr[us], Real fit/tr[us], CPU[sec], Real[sec] = 0.0273973	0.0619245	0.0619245	3.81	2.56316
+74: 	
+
+
+
+Prep[us], CPU fit/tr[us], Real fit/tr[us], CPU[sec], Real[sec] = 0.027027	0.0435081	0.0435081	3.78	2.54823
+75: 	
+
+
+
+Prep[us], CPU fit/tr[us], Real fit/tr[us], CPU[sec], Real[sec] = 0.0266667	0.0588227	0.0588227	3.81	2.57174
+76: 	
+
+
+
+Prep[us], CPU fit/tr[us], Real fit/tr[us], CPU[sec], Real[sec] = 0.0131579	0.0436865	0.0436865	3.78	2.54204
+77: 	
+
+
+
+Prep[us], CPU fit/tr[us], Real fit/tr[us], CPU[sec], Real[sec] = 0.012987	0.0667865	0.0667865	3.79	2.56595
+78: 	
+
+
+
+Prep[us], CPU fit/tr[us], Real fit/tr[us], CPU[sec], Real[sec] = 0.0128205	0.0416705	0.0416705	3.79	2.54673
+79: 	
+
+
+
+Prep[us], CPU fit/tr[us], Real fit/tr[us], CPU[sec], Real[sec] = 0.0379747	0.0579919	0.0579919	3.79	2.56543
+80: 	
+
+
+
+Prep[us], CPU fit/tr[us], Real fit/tr[us], CPU[sec], Real[sec] = 0.025	0.0400726	0.0400726	3.81	2.54873
+81: 	
+
+
+
+Prep[us], CPU fit/tr[us], Real fit/tr[us], CPU[sec], Real[sec] = 0.0246914	0.0639629	0.0639629	3.75	2.54474
+82: 	
+
+
+
+Prep[us], CPU fit/tr[us], Real fit/tr[us], CPU[sec], Real[sec] = 0.0243902	0.042918	0.042918	3.75	2.51882
+83: 	
+
+
+
+Prep[us], CPU fit/tr[us], Real fit/tr[us], CPU[sec], Real[sec] = 0.0120482	0.0563732	0.0563732	3.75	2.53884
+84: 	
+
+
+
+Prep[us], CPU fit/tr[us], Real fit/tr[us], CPU[sec], Real[sec] = 0.0357143	0.0418928	0.0418928	3.76	2.53023
+85: 	
+
+
+
+Prep[us], CPU fit/tr[us], Real fit/tr[us], CPU[sec], Real[sec] = 0.0117647	0.0529834	0.0529834	3.76	2.53562
+86: 	
+
+
+
+Prep[us], CPU fit/tr[us], Real fit/tr[us], CPU[sec], Real[sec] = 0.0232558	0.0410045	0.0410045	3.74	2.52837
+87: 	
+
+
+
+Prep[us], CPU fit/tr[us], Real fit/tr[us], CPU[sec], Real[sec] = 0.0344828	0.0628996	0.0628996	3.73	2.54137
+88: 	
+
+
+
+Prep[us], CPU fit/tr[us], Real fit/tr[us], CPU[sec], Real[sec] = 0.0113636	0.0397236	0.0397236	3.75	2.51089
+89: 	
+
+
+
+Prep[us], CPU fit/tr[us], Real fit/tr[us], CPU[sec], Real[sec] = 0.0224719	0.0540146	0.0540146	3.72	2.52228
+90: 	
+
+
+
+Prep[us], CPU fit/tr[us], Real fit/tr[us], CPU[sec], Real[sec] = 0.0111111	0.0396007	0.0396007	3.74	2.51365
+91: 	
+
+
+
+Prep[us], CPU fit/tr[us], Real fit/tr[us], CPU[sec], Real[sec] = 0.021978	0.0579847	0.0579847	3.74	2.53134
+92: 	
+
+
+
+Prep[us], CPU fit/tr[us], Real fit/tr[us], CPU[sec], Real[sec] = 0.0326087	0.0386068	0.0386068	3.72	2.51546
+93: 	
+
+
+
+Prep[us], CPU fit/tr[us], Real fit/tr[us], CPU[sec], Real[sec] = 0.0322581	0.0555481	0.0555481	3.81	2.62
+94: 	
+
+
+
+Prep[us], CPU fit/tr[us], Real fit/tr[us], CPU[sec], Real[sec] = 0.0106383	0.0377108	0.0377108	3.82	2.6167
+95: 	
+
+
+
+Prep[us], CPU fit/tr[us], Real fit/tr[us], CPU[sec], Real[sec] = 0.0210526	0.0593803	0.0593803	3.75	2.54722
+96: 	
+
+
+
+Prep[us], CPU fit/tr[us], Real fit/tr[us], CPU[sec], Real[sec] = 0.03125	0.0369775	0.0369775	3.81	2.56066
+97: 	
+
+
+
+Prep[us], CPU fit/tr[us], Real fit/tr[us], CPU[sec], Real[sec] = 0.0309278	0.0576325	0.0576325	3.98	2.68756
+98: 	
+
+
+
+Prep[us], CPU fit/tr[us], Real fit/tr[us], CPU[sec], Real[sec] = 0.0204082	0.0406747	0.0406747	3.76	2.53474
+99: 	
+
+
+
+Prep[us], CPU fit/tr[us], Real fit/tr[us], CPU[sec], Real[sec] = 0.020202	0.0559565	0.0559565	3.83	2.60963
+100: 	
+
+
+
+Prep[us], CPU fit/tr[us], Real fit/tr[us], CPU[sec], Real[sec] = 0.04	0.0396406	0.0396406	3.72	2.52303
+101: 	
+
+
+
+Prep[us], CPU fit/tr[us], Real fit/tr[us], CPU[sec], Real[sec] = 0.029703	0.0589398	0.0589398	3.74	2.53443
+102: 	
+
+
+
+Prep[us], CPU fit/tr[us], Real fit/tr[us], CPU[sec], Real[sec] = 0.0294118	0.038879	0.038879	3.75	2.53689
+103: 	
+
+
+
+Prep[us], CPU fit/tr[us], Real fit/tr[us], CPU[sec], Real[sec] = 0.0194175	0.0486651	0.0486651	3.74	2.53094
+104: 	
+
+
+
+Prep[us], CPU fit/tr[us], Real fit/tr[us], CPU[sec], Real[sec] = 0.0192308	0.0380934	0.0380934	3.75	2.5172
+105: 	
+
+
+
+Prep[us], CPU fit/tr[us], Real fit/tr[us], CPU[sec], Real[sec] = 0.0285714	0.0569925	0.0569925	3.73	2.53671
+106: 	
+
+
+
+Prep[us], CPU fit/tr[us], Real fit/tr[us], CPU[sec], Real[sec] = 0.0283019	0.0377653	0.0377653	3.75	2.51455
+107: 	
+
+
+
+Prep[us], CPU fit/tr[us], Real fit/tr[us], CPU[sec], Real[sec] = 0.0280374	0.0577974	0.0577974	3.77	2.56569
+108: 	
+
+
+
+Prep[us], CPU fit/tr[us], Real fit/tr[us], CPU[sec], Real[sec] = 0.0185185	0.0371931	0.0371931	4.04	2.68983
+109: 	
+
+
+
+Prep[us], CPU fit/tr[us], Real fit/tr[us], CPU[sec], Real[sec] = 0.0275229	0.0523019	0.0523019	3.74	2.53861
+110: 	
+
+
+
+Prep[us], CPU fit/tr[us], Real fit/tr[us], CPU[sec], Real[sec] = 0.0272727	0.0364465	0.0364465	3.72	2.52635
+111: 	
+
+
+
+Prep[us], CPU fit/tr[us], Real fit/tr[us], CPU[sec], Real[sec] = 0.018018	0.0502193	0.0502193	3.77	2.54018
+112: 	
+
+
+
+Prep[us], CPU fit/tr[us], Real fit/tr[us], CPU[sec], Real[sec] = 0.0267857	0.0357639	0.0357639	3.77	2.53096
+113: 	
+
+
+
+Prep[us], CPU fit/tr[us], Real fit/tr[us], CPU[sec], Real[sec] = 0.0265487	0.0548821	0.0548821	3.75	2.55354
+114: 	
+
+
+
+Prep[us], CPU fit/tr[us], Real fit/tr[us], CPU[sec], Real[sec] = 0.0263158	0.0391274	0.0391274	3.89	2.62449
+115: 	
+
+
+
+Prep[us], CPU fit/tr[us], Real fit/tr[us], CPU[sec], Real[sec] = 0.026087	0.0498802	0.0498802	3.77	2.54578
+116: 	
+
+
+
+Prep[us], CPU fit/tr[us], Real fit/tr[us], CPU[sec], Real[sec] = 0.0258621	0.0384151	0.0384151	3.75	2.53442
+117: 	
+
+
+
+Prep[us], CPU fit/tr[us], Real fit/tr[us], CPU[sec], Real[sec] = 0.025641	0.0485606	0.0485606	3.74	2.54207
+118: 	
+
+
+
+Prep[us], CPU fit/tr[us], Real fit/tr[us], CPU[sec], Real[sec] = 0.0254237	0.0377833	0.0377833	3.74	2.5322
+119: 	
+
+
+
+Prep[us], CPU fit/tr[us], Real fit/tr[us], CPU[sec], Real[sec] = 0.0252101	0.0543802	0.0543802	3.75	2.54764
+120: 	
+
+
+
+Prep[us], CPU fit/tr[us], Real fit/tr[us], CPU[sec], Real[sec] = 0.025	0.0373728	0.0373728	3.76	2.54099
+121: 	
+
+
+
+Prep[us], CPU fit/tr[us], Real fit/tr[us], CPU[sec], Real[sec] = 0.0247934	0.0537834	0.0537834	3.76	2.55003
+122: 	
+
+
+
+Prep[us], CPU fit/tr[us], Real fit/tr[us], CPU[sec], Real[sec] = 0.0327869	0.0371474	0.0371474	3.73	2.53092
+123: 	
+
+
+
+Prep[us], CPU fit/tr[us], Real fit/tr[us], CPU[sec], Real[sec] = 0.0243902	0.0499478	0.0499478	3.73	2.54665
+124: 	
+
+
+
+Prep[us], CPU fit/tr[us], Real fit/tr[us], CPU[sec], Real[sec] = 0.0241935	0.0366668	0.0366668	3.75	2.53069
+125: 	
+
+
+
+Prep[us], CPU fit/tr[us], Real fit/tr[us], CPU[sec], Real[sec] = 0.032	0.0535076	0.0535076	3.73	2.55312
+126: 	
+
+
+
+Prep[us], CPU fit/tr[us], Real fit/tr[us], CPU[sec], Real[sec] = 0.0238095	0.0361262	0.0361262	3.78	2.5512
+127: 	
+
+
+
+Prep[us], CPU fit/tr[us], Real fit/tr[us], CPU[sec], Real[sec] = 0.0314961	0.0534307	0.0534307	3.72	2.55393
+128: 	
+
+
+
+Prep[us], CPU fit/tr[us], Real fit/tr[us], CPU[sec], Real[sec] = 0.0234375	0.0353558	0.0353558	3.75	2.52321

@@ -1,0 +1,20 @@
+9 100
+ --- opencl  ---
+1:
+Prep[us], CPU fit/tr[us], Real fit/tr[us], CPU[sec], Real[sec] = 0.025	4.09477	4.09477	5.46	5.58785
+2: 	
+Prep[us], CPU fit/tr[us], Real fit/tr[us], CPU[sec], Real[sec] = 0.025	2.0508	2.0508	3.79	3.9322
+4: 	
+Prep[us], CPU fit/tr[us], Real fit/tr[us], CPU[sec], Real[sec] = 0.025	1.0289	1.0289	2.94	3.07921
+8: 	
+Prep[us], CPU fit/tr[us], Real fit/tr[us], CPU[sec], Real[sec] = 0.025	0.517379	0.517379	2.57	2.70731
+10: 	
+Prep[us], CPU fit/tr[us], Real fit/tr[us], CPU[sec], Real[sec] = 0.025	0.419304	0.419304	2.51	2.63962
+20: 	
+Prep[us], CPU fit/tr[us], Real fit/tr[us], CPU[sec], Real[sec] = 0.0375	0.251566	0.251566	2.39	2.53709
+40: 	
+Prep[us], CPU fit/tr[us], Real fit/tr[us], CPU[sec], Real[sec] = 0.0125	0.147612	0.147612	2.29	2.41193
+80: 	
+Prep[us], CPU fit/tr[us], Real fit/tr[us], CPU[sec], Real[sec] = 0.025	0.130742	0.130742	2.26	2.4
+100: 	
+Prep[us], CPU fit/tr[us], Real fit/tr[us], CPU[sec], Real[sec] = 0.025	0.123339	0.123339	2.26	2.39922

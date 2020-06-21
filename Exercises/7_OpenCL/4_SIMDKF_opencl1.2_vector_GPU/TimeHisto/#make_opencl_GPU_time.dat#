@@ -1,0 +1,770 @@
+ 128 128
+ --- opencl  ---
+ 1: 	
+
+Warning: vector_add kernel has register spilling. Lower performance is expected.
+
+ NTracksV 32000 4
+Prep[us], CPU fit/tr[us], Real fit/tr[us], CPU[sec], Real[sec] = 0.03125	1.19836	1.19836	17.38	13.0207
+2: 	
+
+Warning: vector_add kernel has register spilling. Lower performance is expected.
+
+ NTracksV 32000 4
+Prep[us], CPU fit/tr[us], Real fit/tr[us], CPU[sec], Real[sec] = 0.0390625	0.607594	0.607594	17.17	12.1008
+3: 	
+
+Warning: vector_add kernel has register spilling. Lower performance is expected.
+
+ NTracksV 31500 4
+Prep[us], CPU fit/tr[us], Real fit/tr[us], CPU[sec], Real[sec] = 0.0396825	0.413561	0.413561	17.41	12.0661
+4: 	
+
+Warning: vector_add kernel has register spilling. Lower performance is expected.
+
+ NTracksV 32000 4
+Prep[us], CPU fit/tr[us], Real fit/tr[us], CPU[sec], Real[sec] = 0.0390625	0.306604	0.306604	17.13	11.7053
+5: 	
+
+Warning: vector_add kernel has register spilling. Lower performance is expected.
+
+ NTracksV 31250 4
+Prep[us], CPU fit/tr[us], Real fit/tr[us], CPU[sec], Real[sec] = 0.024	0.242821	0.242821	17.71	12.0537
+6: 	
+
+Warning: vector_add kernel has register spilling. Lower performance is expected.
+
+ NTracksV 31500 4
+Prep[us], CPU fit/tr[us], Real fit/tr[us], CPU[sec], Real[sec] = 0.031746	0.198959	0.198959	17.29	11.7217
+7: 	
+
+Warning: vector_add kernel has register spilling. Lower performance is expected.
+
+ NTracksV 31500 4
+Prep[us], CPU fit/tr[us], Real fit/tr[us], CPU[sec], Real[sec] = 0.031746	0.186064	0.186064	17.21	11.6318
+8: 	
+
+Warning: vector_add kernel has register spilling. Lower performance is expected.
+
+ NTracksV 32000 4
+Prep[us], CPU fit/tr[us], Real fit/tr[us], CPU[sec], Real[sec] = 0.03125	0.159377	0.159377	17.22	11.5818
+9: 	
+
+Warning: vector_add kernel has register spilling. Lower performance is expected.
+
+ NTracksV 31500 4
+Prep[us], CPU fit/tr[us], Real fit/tr[us], CPU[sec], Real[sec] = 0.031746	0.147513	0.147513	17.28	11.6249
+10: 	
+
+Warning: vector_add kernel has register spilling. Lower performance is expected.
+
+ NTracksV 30000 4
+Prep[us], CPU fit/tr[us], Real fit/tr[us], CPU[sec], Real[sec] = 0.0416667	0.126208	0.126208	17.3	11.6081
+11: 	
+
+Warning: vector_add kernel has register spilling. Lower performance is expected.
+
+ NTracksV 30250 4
+Prep[us], CPU fit/tr[us], Real fit/tr[us], CPU[sec], Real[sec] = 0.0330579	0.115634	0.115634	17.34	11.5915
+12: 	
+
+Warning: vector_add kernel has register spilling. Lower performance is expected.
+
+ NTracksV 30000 4
+Prep[us], CPU fit/tr[us], Real fit/tr[us], CPU[sec], Real[sec] = 0.025	0.105112	0.105112	17.22	11.4837
+13: 	
+
+Warning: vector_add kernel has register spilling. Lower performance is expected.
+
+ NTracksV 29250 4
+Prep[us], CPU fit/tr[us], Real fit/tr[us], CPU[sec], Real[sec] = 0.042735	0.104239	0.104239	17.07	11.4207
+14: 	
+
+Warning: vector_add kernel has register spilling. Lower performance is expected.
+
+ NTracksV 31500 4
+Prep[us], CPU fit/tr[us], Real fit/tr[us], CPU[sec], Real[sec] = 0.0238095	0.0922674	0.0922674	17.34	11.6156
+15: 	
+
+Warning: vector_add kernel has register spilling. Lower performance is expected.
+
+ NTracksV 30000 4
+Prep[us], CPU fit/tr[us], Real fit/tr[us], CPU[sec], Real[sec] = 0.0416667	0.0971832	0.0971832	17.04	11.419
+16: 	
+
+Warning: vector_add kernel has register spilling. Lower performance is expected.
+
+ NTracksV 32000 4
+Prep[us], CPU fit/tr[us], Real fit/tr[us], CPU[sec], Real[sec] = 0.0234375	0.09098	0.09098	17.76	11.8641
+17: 	
+
+Warning: vector_add kernel has register spilling. Lower performance is expected.
+
+ NTracksV 29750 4
+Prep[us], CPU fit/tr[us], Real fit/tr[us], CPU[sec], Real[sec] = 0.0252101	0.0996647	0.0996647	17.12	11.4057
+18: 	
+
+Warning: vector_add kernel has register spilling. Lower performance is expected.
+
+ NTracksV 31500 4
+Prep[us], CPU fit/tr[us], Real fit/tr[us], CPU[sec], Real[sec] = 0.031746	0.0901364	0.0901364	17.28	11.6275
+19: 	
+
+Warning: vector_add kernel has register spilling. Lower performance is expected.
+
+ NTracksV 28500 4
+Prep[us], CPU fit/tr[us], Real fit/tr[us], CPU[sec], Real[sec] = 0.0263158	0.082682	0.082682	17.1	11.4188
+20: 	
+
+Warning: vector_add kernel has register spilling. Lower performance is expected.
+
+ NTracksV 30000 4
+Prep[us], CPU fit/tr[us], Real fit/tr[us], CPU[sec], Real[sec] = 0.025	0.0855322	0.0855322	17.1	11.4072
+21: 	
+
+Warning: vector_add kernel has register spilling. Lower performance is expected.
+
+ NTracksV 31500 4
+Prep[us], CPU fit/tr[us], Real fit/tr[us], CPU[sec], Real[sec] = 0.0238095	0.0752716	0.0752716	17.09	11.3934
+22: 	
+
+Warning: vector_add kernel has register spilling. Lower performance is expected.
+
+ NTracksV 27500 4
+Prep[us], CPU fit/tr[us], Real fit/tr[us], CPU[sec], Real[sec] = 0.0272727	0.0719415	0.0719415	17.17	11.4419
+23: 	
+
+Warning: vector_add kernel has register spilling. Lower performance is expected.
+
+ NTracksV 28750 4
+Prep[us], CPU fit/tr[us], Real fit/tr[us], CPU[sec], Real[sec] = 0.0434783	0.0744486	0.0744486	17.31	11.5631
+24: 	
+
+Warning: vector_add kernel has register spilling. Lower performance is expected.
+
+ NTracksV 30000 4
+Prep[us], CPU fit/tr[us], Real fit/tr[us], CPU[sec], Real[sec] = 0.0333333	0.0717891	0.0717891	15.11	11.4521
+25: 	
+
+Warning: vector_add kernel has register spilling. Lower performance is expected.
+
+ NTracksV 31250 4
+Prep[us], CPU fit/tr[us], Real fit/tr[us], CPU[sec], Real[sec] = 0.032	0.0699556	0.0699556	17.33	11.5116
+26: 	
+
+Warning: vector_add kernel has register spilling. Lower performance is expected.
+
+ NTracksV 26000 4
+Prep[us], CPU fit/tr[us], Real fit/tr[us], CPU[sec], Real[sec] = 0.0288462	0.0732981	0.0732981	17.09	11.3716
+27: 	
+
+Warning: vector_add kernel has register spilling. Lower performance is expected.
+
+ NTracksV 27000 4
+Prep[us], CPU fit/tr[us], Real fit/tr[us], CPU[sec], Real[sec] = 0.0277778	0.0709313	0.0709313	17.13	11.383
+28: 	
+
+Warning: vector_add kernel has register spilling. Lower performance is expected.
+
+ NTracksV 28000 4
+Prep[us], CPU fit/tr[us], Real fit/tr[us], CPU[sec], Real[sec] = 0.0357143	0.0592578	0.0592578	17.19	11.4413
+29: 	
+
+Warning: vector_add kernel has register spilling. Lower performance is expected.
+
+ NTracksV 29000 4
+Prep[us], CPU fit/tr[us], Real fit/tr[us], CPU[sec], Real[sec] = 0.0258621	0.064516	0.064516	17.22	11.4558
+30: 	
+
+Warning: vector_add kernel has register spilling. Lower performance is expected.
+
+ NTracksV 30000 4
+Prep[us], CPU fit/tr[us], Real fit/tr[us], CPU[sec], Real[sec] = 0.025	0.0617189	0.0617189	21.26	14.1517
+31: 	
+
+Warning: vector_add kernel has register spilling. Lower performance is expected.
+
+ NTracksV 31000 4
+Prep[us], CPU fit/tr[us], Real fit/tr[us], CPU[sec], Real[sec] = 0.0322581	0.0515035	0.0515035	17.14	11.3611
+32: 	
+
+Warning: vector_add kernel has register spilling. Lower performance is expected.
+
+ NTracksV 32000 4
+Prep[us], CPU fit/tr[us], Real fit/tr[us], CPU[sec], Real[sec] = 0.0390625	0.0504203	0.0504203	17.14	11.3561
+33: 	
+
+Warning: vector_add kernel has register spilling. Lower performance is expected.
+
+ NTracksV 24750 4
+Prep[us], CPU fit/tr[us], Real fit/tr[us], CPU[sec], Real[sec] = 0.040404	0.0712733	0.0712733	17.12	11.354
+34: 	
+
+Warning: vector_add kernel has register spilling. Lower performance is expected.
+
+ NTracksV 25500 4
+Prep[us], CPU fit/tr[us], Real fit/tr[us], CPU[sec], Real[sec] = 0.0294118	0.0603952	0.0603952	17.78	11.8769
+35: 	
+
+Warning: vector_add kernel has register spilling. Lower performance is expected.
+
+ NTracksV 26250 4
+Prep[us], CPU fit/tr[us], Real fit/tr[us], CPU[sec], Real[sec] = 0.0285714	0.0674016	0.0674016	18.66	12.6839
+36: 	
+
+Warning: vector_add kernel has register spilling. Lower performance is expected.
+
+ NTracksV 27000 4
+Prep[us], CPU fit/tr[us], Real fit/tr[us], CPU[sec], Real[sec] = 0.0277778	0.0673178	0.0673178	17.06	11.3464
+37: 	
+
+Warning: vector_add kernel has register spilling. Lower performance is expected.
+
+ NTracksV 27750 4
+Prep[us], CPU fit/tr[us], Real fit/tr[us], CPU[sec], Real[sec] = 0.036036	0.0640539	0.0640539	19.93	13.2585
+38: 	
+
+Warning: vector_add kernel has register spilling. Lower performance is expected.
+
+ NTracksV 28500 4
+Prep[us], CPU fit/tr[us], Real fit/tr[us], CPU[sec], Real[sec] = 0.0350877	0.0535864	0.0535864	18.22	12.2001
+39: 	
+
+Warning: vector_add kernel has register spilling. Lower performance is expected.
+
+ NTracksV 29250 4
+Prep[us], CPU fit/tr[us], Real fit/tr[us], CPU[sec], Real[sec] = 0.025641	0.0522098	0.0522098	17.1	11.386
+40: 	
+
+Warning: vector_add kernel has register spilling. Lower performance is expected.
+
+ NTracksV 30000 4
+Prep[us], CPU fit/tr[us], Real fit/tr[us], CPU[sec], Real[sec] = 0.0333333	0.0542517	0.0542517	17.58	11.6896
+41: 	
+
+Warning: vector_add kernel has register spilling. Lower performance is expected.
+
+ NTracksV 30750 4
+Prep[us], CPU fit/tr[us], Real fit/tr[us], CPU[sec], Real[sec] = 0.0406504	0.0504927	0.0504927	17.2	11.4886
+42: 	
+
+Warning: vector_add kernel has register spilling. Lower performance is expected.
+
+ NTracksV 31500 4
+Prep[us], CPU fit/tr[us], Real fit/tr[us], CPU[sec], Real[sec] = 0.031746	0.0493633	0.0493633	17.32	11.5568
+43: 	
+
+Warning: vector_add kernel has register spilling. Lower performance is expected.
+
+ NTracksV 21500 4
+Prep[us], CPU fit/tr[us], Real fit/tr[us], CPU[sec], Real[sec] = 0.0232558	0.0623509	0.0623509	17.28	11.4799
+44: 	
+
+Warning: vector_add kernel has register spilling. Lower performance is expected.
+
+ NTracksV 22000 4
+Prep[us], CPU fit/tr[us], Real fit/tr[us], CPU[sec], Real[sec] = 0.0113636	0.0647005	0.0647005	17.08	11.3446
+45: 	
+
+Warning: vector_add kernel has register spilling. Lower performance is expected.
+
+ NTracksV 22500 4
+Prep[us], CPU fit/tr[us], Real fit/tr[us], CPU[sec], Real[sec] = 0.0222222	0.0557603	0.0557603	17.71	11.8404
+46: 	
+
+Warning: vector_add kernel has register spilling. Lower performance is expected.
+
+ NTracksV 23000 4
+Prep[us], CPU fit/tr[us], Real fit/tr[us], CPU[sec], Real[sec] = 0.0326087	0.0538833	0.0538833	17.02	11.3448
+47: 	
+
+Warning: vector_add kernel has register spilling. Lower performance is expected.
+
+ NTracksV 23500 4
+Prep[us], CPU fit/tr[us], Real fit/tr[us], CPU[sec], Real[sec] = 0.0319149	0.054363	0.054363	17.14	11.4129
+48: 	
+
+Warning: vector_add kernel has register spilling. Lower performance is expected.
+
+ NTracksV 24000 4
+Prep[us], CPU fit/tr[us], Real fit/tr[us], CPU[sec], Real[sec] = 0.03125	0.0498963	0.0498963	17.46	11.7259
+49: 	
+
+Warning: vector_add kernel has register spilling. Lower performance is expected.
+
+ NTracksV 24500 4
+Prep[us], CPU fit/tr[us], Real fit/tr[us], CPU[sec], Real[sec] = 0.0306122	0.0578166	0.0578166	17.07	11.3301
+50: 	
+
+Warning: vector_add kernel has register spilling. Lower performance is expected.
+
+ NTracksV 25000 4
+Prep[us], CPU fit/tr[us], Real fit/tr[us], CPU[sec], Real[sec] = 0.04	0.0593705	0.0593705	17.1	11.3683
+51: 	
+
+Warning: vector_add kernel has register spilling. Lower performance is expected.
+
+ NTracksV 25500 4
+Prep[us], CPU fit/tr[us], Real fit/tr[us], CPU[sec], Real[sec] = 0.0294118	0.0547497	0.0547497	18.95	12.6828
+52: 	
+
+Warning: vector_add kernel has register spilling. Lower performance is expected.
+
+ NTracksV 26000 4
+Prep[us], CPU fit/tr[us], Real fit/tr[us], CPU[sec], Real[sec] = 0.0384615	0.0570138	0.0570138	19.65	13.064
+53: 	
+
+Warning: vector_add kernel has register spilling. Lower performance is expected.
+
+ NTracksV 26500 4
+Prep[us], CPU fit/tr[us], Real fit/tr[us], CPU[sec], Real[sec] = 0.0283019	0.0554506	0.0554506	17.26	11.4297
+54: 	
+
+Warning: vector_add kernel has register spilling. Lower performance is expected.
+
+ NTracksV 27000 4
+Prep[us], CPU fit/tr[us], Real fit/tr[us], CPU[sec], Real[sec] = 0.0277778	0.0593829	0.0593829	17.14	11.4335
+55: 	
+
+Warning: vector_add kernel has register spilling. Lower performance is expected.
+
+ NTracksV 27500 4
+Prep[us], CPU fit/tr[us], Real fit/tr[us], CPU[sec], Real[sec] = 0.0272727	0.0493358	0.0493358	17.09	11.3997
+56: 	
+
+Warning: vector_add kernel has register spilling. Lower performance is expected.
+
+ NTracksV 28000 4
+Prep[us], CPU fit/tr[us], Real fit/tr[us], CPU[sec], Real[sec] = 0.0357143	0.0586189	0.0586189	17.14	11.4113
+57: 	
+
+Warning: vector_add kernel has register spilling. Lower performance is expected.
+
+ NTracksV 28500 4
+Prep[us], CPU fit/tr[us], Real fit/tr[us], CPU[sec], Real[sec] = 0.0263158	0.0531238	0.0531238	17.24	11.7204
+58: 	
+
+Warning: vector_add kernel has register spilling. Lower performance is expected.
+
+ NTracksV 29000 4
+Prep[us], CPU fit/tr[us], Real fit/tr[us], CPU[sec], Real[sec] = 0.0344828	0.0493421	0.0493421	17.12	11.3742
+59: 	
+
+Warning: vector_add kernel has register spilling. Lower performance is expected.
+
+ NTracksV 29500 4
+Prep[us], CPU fit/tr[us], Real fit/tr[us], CPU[sec], Real[sec] = 0.0254237	0.0527528	0.0527528	17.1	11.3754
+60: 	
+
+Warning: vector_add kernel has register spilling. Lower performance is expected.
+
+ NTracksV 30000 4
+Prep[us], CPU fit/tr[us], Real fit/tr[us], CPU[sec], Real[sec] = 0.0333333	0.0520591	0.0520591	17.21	11.4403
+61: 	
+
+Warning: vector_add kernel has register spilling. Lower performance is expected.
+
+ NTracksV 30500 4
+Prep[us], CPU fit/tr[us], Real fit/tr[us], CPU[sec], Real[sec] = 0.0327869	0.0522319	0.0522319	17.02	11.3417
+62: 	
+
+Warning: vector_add kernel has register spilling. Lower performance is expected.
+
+ NTracksV 31000 4
+Prep[us], CPU fit/tr[us], Real fit/tr[us], CPU[sec], Real[sec] = 0.0322581	0.0513287	0.0513287	17.13	11.3658
+63: 	
+
+Warning: vector_add kernel has register spilling. Lower performance is expected.
+
+ NTracksV 31500 4
+Prep[us], CPU fit/tr[us], Real fit/tr[us], CPU[sec], Real[sec] = 0.0238095	0.0428735	0.0428735	17.06	11.3526
+64: 	
+
+Warning: vector_add kernel has register spilling. Lower performance is expected.
+
+ NTracksV 32000 4
+Prep[us], CPU fit/tr[us], Real fit/tr[us], CPU[sec], Real[sec] = 0.03125	0.0471747	0.0471747	17.41	11.5876
+65: 	
+
+Warning: vector_add kernel has register spilling. Lower performance is expected.
+
+ NTracksV 16250 4
+Prep[us], CPU fit/tr[us], Real fit/tr[us], CPU[sec], Real[sec] = 0.0307692	0.0730655	0.0730655	18.13	12.1067
+66: 	
+
+Warning: vector_add kernel has register spilling. Lower performance is expected.
+
+ NTracksV 16500 4
+Prep[us], CPU fit/tr[us], Real fit/tr[us], CPU[sec], Real[sec] = 0.0151515	0.0623924	0.0623924	17.31	11.5093
+67: 	
+
+Warning: vector_add kernel has register spilling. Lower performance is expected.
+
+ NTracksV 16750 4
+Prep[us], CPU fit/tr[us], Real fit/tr[us], CPU[sec], Real[sec] = 0.0447761	0.0655009	0.0655009	17.03	11.3382
+68: 	
+
+Warning: vector_add kernel has register spilling. Lower performance is expected.
+
+ NTracksV 17000 4
+Prep[us], CPU fit/tr[us], Real fit/tr[us], CPU[sec], Real[sec] = 0.0294118	0.0706296	0.0706296	17.03	11.3535
+69: 	
+
+Warning: vector_add kernel has register spilling. Lower performance is expected.
+
+ NTracksV 17250 4
+Prep[us], CPU fit/tr[us], Real fit/tr[us], CPU[sec], Real[sec] = 0.0289855	0.0581527	0.0581527	17.09	11.3423
+70: 	
+
+Warning: vector_add kernel has register spilling. Lower performance is expected.
+
+ NTracksV 17500 4
+Prep[us], CPU fit/tr[us], Real fit/tr[us], CPU[sec], Real[sec] = 0.0285714	0.071876	0.071876	17.08	11.344
+71: 	
+
+Warning: vector_add kernel has register spilling. Lower performance is expected.
+
+ NTracksV 17750 4
+Prep[us], CPU fit/tr[us], Real fit/tr[us], CPU[sec], Real[sec] = 0.028169	0.0701607	0.0701607	17.08	11.3607
+72: 	
+
+Warning: vector_add kernel has register spilling. Lower performance is expected.
+
+ NTracksV 18000 4
+Prep[us], CPU fit/tr[us], Real fit/tr[us], CPU[sec], Real[sec] = 0.0416667	0.0636241	0.0636241	17.17	11.3953
+73: 	
+
+Warning: vector_add kernel has register spilling. Lower performance is expected.
+
+ NTracksV 18250 4
+Prep[us], CPU fit/tr[us], Real fit/tr[us], CPU[sec], Real[sec] = 0.0136986	0.0573437	0.0573437	17.48	11.5999
+74: 	
+
+Warning: vector_add kernel has register spilling. Lower performance is expected.
+
+ NTracksV 18500 4
+Prep[us], CPU fit/tr[us], Real fit/tr[us], CPU[sec], Real[sec] = 0.027027	0.0561415	0.0561415	17.1	11.3446
+75: 	
+
+Warning: vector_add kernel has register spilling. Lower performance is expected.
+
+ NTracksV 18750 4
+Prep[us], CPU fit/tr[us], Real fit/tr[us], CPU[sec], Real[sec] = 0.0266667	0.0674268	0.0674268	17.5	11.5819
+76: 	
+
+Warning: vector_add kernel has register spilling. Lower performance is expected.
+
+ NTracksV 19000 4
+Prep[us], CPU fit/tr[us], Real fit/tr[us], CPU[sec], Real[sec] = 0.0394737	0.0614407	0.0614407	17.14	11.384
+77: 	
+
+Warning: vector_add kernel has register spilling. Lower performance is expected.
+
+ NTracksV 19250 4
+Prep[us], CPU fit/tr[us], Real fit/tr[us], CPU[sec], Real[sec] = 0.025974	0.0477801	0.0477801	17.11	11.3514
+78: 	
+
+Warning: vector_add kernel has register spilling. Lower performance is expected.
+
+ NTracksV 19500 4
+Prep[us], CPU fit/tr[us], Real fit/tr[us], CPU[sec], Real[sec] = 0.0384615	0.0608279	0.0608279	17.1	11.3539
+79: 	
+
+Warning: vector_add kernel has register spilling. Lower performance is expected.
+
+ NTracksV 19750 4
+Prep[us], CPU fit/tr[us], Real fit/tr[us], CPU[sec], Real[sec] = 0.0379747	0.0545129	0.0545129	17.08	11.3529
+80: 	
+
+Warning: vector_add kernel has register spilling. Lower performance is expected.
+
+ NTracksV 20000 4
+Prep[us], CPU fit/tr[us], Real fit/tr[us], CPU[sec], Real[sec] = 0.0375	0.0474969	0.0474969	17.02	11.3373
+81: 	
+
+Warning: vector_add kernel has register spilling. Lower performance is expected.
+
+ NTracksV 20250 4
+Prep[us], CPU fit/tr[us], Real fit/tr[us], CPU[sec], Real[sec] = 0.037037	0.050924	0.050924	17.49	11.6345
+82: 	
+
+Warning: vector_add kernel has register spilling. Lower performance is expected.
+
+ NTracksV 20500 4
+Prep[us], CPU fit/tr[us], Real fit/tr[us], CPU[sec], Real[sec] = 0.0365854	0.0484558	0.0484558	17.21	11.4664
+83: 	
+
+Warning: vector_add kernel has register spilling. Lower performance is expected.
+
+ NTracksV 20750 4
+Prep[us], CPU fit/tr[us], Real fit/tr[us], CPU[sec], Real[sec] = 0.0361446	0.0571207	0.0571207	17.1	11.3698
+84: 	
+
+Warning: vector_add kernel has register spilling. Lower performance is expected.
+
+ NTracksV 21000 4
+Prep[us], CPU fit/tr[us], Real fit/tr[us], CPU[sec], Real[sec] = 0.0357143	0.0564683	0.0564683	17.92	11.9863
+85: 	
+
+Warning: vector_add kernel has register spilling. Lower performance is expected.
+
+ NTracksV 21250 4
+Prep[us], CPU fit/tr[us], Real fit/tr[us], CPU[sec], Real[sec] = 0.0352941	0.0623918	0.0623918	17.27	11.5144
+86: 	
+
+Warning: vector_add kernel has register spilling. Lower performance is expected.
+
+ NTracksV 21500 4
+Prep[us], CPU fit/tr[us], Real fit/tr[us], CPU[sec], Real[sec] = 0.0348837	0.0610133	0.0610133	17.12	11.3769
+87: 	
+
+Warning: vector_add kernel has register spilling. Lower performance is expected.
+
+ NTracksV 21750 4
+Prep[us], CPU fit/tr[us], Real fit/tr[us], CPU[sec], Real[sec] = 0.0344828	0.0492138	0.0492138	17.79	11.8295
+88: 	
+
+Warning: vector_add kernel has register spilling. Lower performance is expected.
+
+ NTracksV 22000 4
+Prep[us], CPU fit/tr[us], Real fit/tr[us], CPU[sec], Real[sec] = 0.0227273	0.0506215	0.0506215	17.11	11.3907
+89: 	
+
+Warning: vector_add kernel has register spilling. Lower performance is expected.
+
+ NTracksV 22250 4
+Prep[us], CPU fit/tr[us], Real fit/tr[us], CPU[sec], Real[sec] = 0.0337079	0.0542958	0.0542958	17.65	11.7149
+90: 	
+
+Warning: vector_add kernel has register spilling. Lower performance is expected.
+
+ NTracksV 22500 4
+Prep[us], CPU fit/tr[us], Real fit/tr[us], CPU[sec], Real[sec] = 0.0333333	0.0581345	0.0581345	17.08	11.3498
+91: 	
+
+Warning: vector_add kernel has register spilling. Lower performance is expected.
+
+ NTracksV 22750 4
+Prep[us], CPU fit/tr[us], Real fit/tr[us], CPU[sec], Real[sec] = 0.032967	0.058189	0.058189	17.12	11.3422
+92: 	
+
+Warning: vector_add kernel has register spilling. Lower performance is expected.
+
+ NTracksV 23000 4
+Prep[us], CPU fit/tr[us], Real fit/tr[us], CPU[sec], Real[sec] = 0.0326087	0.0603884	0.0603884	17.26	11.4776
+93: 	
+
+Warning: vector_add kernel has register spilling. Lower performance is expected.
+
+ NTracksV 23250 4
+Prep[us], CPU fit/tr[us], Real fit/tr[us], CPU[sec], Real[sec] = 0.0322581	0.0560059	0.0560059	17.09	11.3826
+94: 	
+
+Warning: vector_add kernel has register spilling. Lower performance is expected.
+
+ NTracksV 23500 4
+Prep[us], CPU fit/tr[us], Real fit/tr[us], CPU[sec], Real[sec] = 0.0319149	0.0606251	0.0606251	17.05	11.3402
+95: 	
+
+Warning: vector_add kernel has register spilling. Lower performance is expected.
+
+ NTracksV 23750 4
+Prep[us], CPU fit/tr[us], Real fit/tr[us], CPU[sec], Real[sec] = 0.0315789	0.049416	0.049416	17.12	11.3749
+96: 	
+
+Warning: vector_add kernel has register spilling. Lower performance is expected.
+
+ NTracksV 24000 4
+Prep[us], CPU fit/tr[us], Real fit/tr[us], CPU[sec], Real[sec] = 0.03125	0.0481267	0.0481267	17.18	11.4119
+97: 	
+
+Warning: vector_add kernel has register spilling. Lower performance is expected.
+
+ NTracksV 24250 4
+Prep[us], CPU fit/tr[us], Real fit/tr[us], CPU[sec], Real[sec] = 0.0309278	0.052108	0.052108	17.48	11.643
+98: 	
+
+Warning: vector_add kernel has register spilling. Lower performance is expected.
+
+ NTracksV 24500 4
+Prep[us], CPU fit/tr[us], Real fit/tr[us], CPU[sec], Real[sec] = 0.0306122	0.052213	0.052213	17.13	11.3414
+99: 	
+
+Warning: vector_add kernel has register spilling. Lower performance is expected.
+
+ NTracksV 24750 4
+Prep[us], CPU fit/tr[us], Real fit/tr[us], CPU[sec], Real[sec] = 0.030303	0.0585522	0.0585522	17.15	11.3615
+100: 	
+
+Warning: vector_add kernel has register spilling. Lower performance is expected.
+
+ NTracksV 25000 4
+Prep[us], CPU fit/tr[us], Real fit/tr[us], CPU[sec], Real[sec] = 0.03	0.0552111	0.0552111	17.86	11.9112
+101: 	
+
+Warning: vector_add kernel has register spilling. Lower performance is expected.
+
+ NTracksV 25250 4
+Prep[us], CPU fit/tr[us], Real fit/tr[us], CPU[sec], Real[sec] = 0.019802	0.0580984	0.0580984	16.6	11.378
+102: 	
+
+Warning: vector_add kernel has register spilling. Lower performance is expected.
+
+ NTracksV 25500 4
+Prep[us], CPU fit/tr[us], Real fit/tr[us], CPU[sec], Real[sec] = 0.0294118	0.0492481	0.0492481	17.15	11.3693
+103: 	
+
+Warning: vector_add kernel has register spilling. Lower performance is expected.
+
+ NTracksV 25750 4
+Prep[us], CPU fit/tr[us], Real fit/tr[us], CPU[sec], Real[sec] = 0.038835	0.0485966	0.0485966	17.12	11.3479
+104: 	
+
+Warning: vector_add kernel has register spilling. Lower performance is expected.
+
+ NTracksV 26000 4
+Prep[us], CPU fit/tr[us], Real fit/tr[us], CPU[sec], Real[sec] = 0.0288462	0.0591195	0.0591195	17.69	11.7455
+105: 	
+
+Warning: vector_add kernel has register spilling. Lower performance is expected.
+
+ NTracksV 26250 4
+Prep[us], CPU fit/tr[us], Real fit/tr[us], CPU[sec], Real[sec] = 0.0380952	0.047667	0.047667	17.38	11.5502
+106: 	
+
+Warning: vector_add kernel has register spilling. Lower performance is expected.
+
+ NTracksV 26500 4
+Prep[us], CPU fit/tr[us], Real fit/tr[us], CPU[sec], Real[sec] = 0.0377358	0.0529133	0.0529133	17.36	11.5434
+107: 	
+
+Warning: vector_add kernel has register spilling. Lower performance is expected.
+
+ NTracksV 26750 4
+Prep[us], CPU fit/tr[us], Real fit/tr[us], CPU[sec], Real[sec] = 0.0280374	0.0544037	0.0544037	17.15	11.3839
+108: 	
+
+Warning: vector_add kernel has register spilling. Lower performance is expected.
+
+ NTracksV 27000 4
+Prep[us], CPU fit/tr[us], Real fit/tr[us], CPU[sec], Real[sec] = 0.0277778	0.0553077	0.0553077	17.45	11.6187
+109: 	
+
+Warning: vector_add kernel has register spilling. Lower performance is expected.
+
+ NTracksV 27250 4
+Prep[us], CPU fit/tr[us], Real fit/tr[us], CPU[sec], Real[sec] = 0.0275229	0.050012	0.050012	17.25	11.4381
+110: 	
+
+Warning: vector_add kernel has register spilling. Lower performance is expected.
+
+ NTracksV 27500 4
+Prep[us], CPU fit/tr[us], Real fit/tr[us], CPU[sec], Real[sec] = 0.0272727	0.0457028	0.0457028	17.17	11.3876
+111: 	
+
+Warning: vector_add kernel has register spilling. Lower performance is expected.
+
+ NTracksV 27750 4
+Prep[us], CPU fit/tr[us], Real fit/tr[us], CPU[sec], Real[sec] = 0.027027	0.0509293	0.0509293	17.04	11.3659
+112: 	
+
+Warning: vector_add kernel has register spilling. Lower performance is expected.
+
+ NTracksV 28000 4
+Prep[us], CPU fit/tr[us], Real fit/tr[us], CPU[sec], Real[sec] = 0.0267857	0.0493775	0.0493775	17.15	11.3956
+113: 	
+
+Warning: vector_add kernel has register spilling. Lower performance is expected.
+
+ NTracksV 28250 4
+Prep[us], CPU fit/tr[us], Real fit/tr[us], CPU[sec], Real[sec] = 0.0265487	0.0491915	0.0491915	17.1	11.3938
+114: 	
+
+Warning: vector_add kernel has register spilling. Lower performance is expected.
+
+ NTracksV 28500 4
+Prep[us], CPU fit/tr[us], Real fit/tr[us], CPU[sec], Real[sec] = 0.0350877	0.0523756	0.0523756	17.09	11.3764
+115: 	
+
+Warning: vector_add kernel has register spilling. Lower performance is expected.
+
+ NTracksV 28750 4
+Prep[us], CPU fit/tr[us], Real fit/tr[us], CPU[sec], Real[sec] = 0.0347826	0.0565855	0.0565855	17.03	11.3568
+116: 	
+
+Warning: vector_add kernel has register spilling. Lower performance is expected.
+
+ NTracksV 29000 4
+Prep[us], CPU fit/tr[us], Real fit/tr[us], CPU[sec], Real[sec] = 0.0344828	0.0467347	0.0467347	17.09	11.3679
+117: 	
+
+Warning: vector_add kernel has register spilling. Lower performance is expected.
+
+ NTracksV 29250 4
+Prep[us], CPU fit/tr[us], Real fit/tr[us], CPU[sec], Real[sec] = 0.025641	0.0550187	0.0550187	17.2	11.4738
+118: 	
+
+Warning: vector_add kernel has register spilling. Lower performance is expected.
+
+ NTracksV 29500 4
+Prep[us], CPU fit/tr[us], Real fit/tr[us], CPU[sec], Real[sec] = 0.0254237	0.0500796	0.0500796	17.35	11.5581
+119: 	
+
+Warning: vector_add kernel has register spilling. Lower performance is expected.
+
+ NTracksV 29750 4
+Prep[us], CPU fit/tr[us], Real fit/tr[us], CPU[sec], Real[sec] = 0.0336134	0.0452098	0.0452098	17.32	11.5041
+120: 	
+
+Warning: vector_add kernel has register spilling. Lower performance is expected.
+
+ NTracksV 30000 4
+Prep[us], CPU fit/tr[us], Real fit/tr[us], CPU[sec], Real[sec] = 0.0333333	0.0465646	0.0465646	17.29	11.5227
+121: 	
+
+Warning: vector_add kernel has register spilling. Lower performance is expected.
+
+ NTracksV 30250 4
+Prep[us], CPU fit/tr[us], Real fit/tr[us], CPU[sec], Real[sec] = 0.0330579	0.0487182	0.0487182	17.39	11.5452
+122: 	
+
+Warning: vector_add kernel has register spilling. Lower performance is expected.
+
+ NTracksV 30500 4
+Prep[us], CPU fit/tr[us], Real fit/tr[us], CPU[sec], Real[sec] = 0.0409836	0.0447195	0.0447195	17.29	11.5026
+123: 	
+
+Warning: vector_add kernel has register spilling. Lower performance is expected.
+
+ NTracksV 30750 4
+Prep[us], CPU fit/tr[us], Real fit/tr[us], CPU[sec], Real[sec] = 0.0325203	0.0523404	0.0523404	17.35	11.5333
+124: 	
+
+Warning: vector_add kernel has register spilling. Lower performance is expected.
+
+ NTracksV 31000 4
+Prep[us], CPU fit/tr[us], Real fit/tr[us], CPU[sec], Real[sec] = 0.0241935	0.050616	0.050616	17.26	11.4851
+125: 	
+
+Warning: vector_add kernel has register spilling. Lower performance is expected.
+
+ NTracksV 31250 4
+Prep[us], CPU fit/tr[us], Real fit/tr[us], CPU[sec], Real[sec] = 0.032	0.0509958	0.0509958	17.29	11.4934
+126: 	
+
+Warning: vector_add kernel has register spilling. Lower performance is expected.
+
+ NTracksV 31500 4
+Prep[us], CPU fit/tr[us], Real fit/tr[us], CPU[sec], Real[sec] = 0.031746	0.0427962	0.0427962	17.23	11.4862
+127: 	
+
+Warning: vector_add kernel has register spilling. Lower performance is expected.
+
+ NTracksV 31750 4
+Prep[us], CPU fit/tr[us], Real fit/tr[us], CPU[sec], Real[sec] = 0.023622	0.048484	0.048484	17.39	11.5507
+128: 	
+
+Warning: vector_add kernel has register spilling. Lower performance is expected.
+
+ NTracksV 32000 4
+Prep[us], CPU fit/tr[us], Real fit/tr[us], CPU[sec], Real[sec] = 0.03125	0.0416762	0.0416762	17.31	11.5366

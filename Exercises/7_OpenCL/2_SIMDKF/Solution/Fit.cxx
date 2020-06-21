@@ -1,0 +1,787 @@
+#include <iostream>
+#include <fstream>
+#include <cstring>
+#include <stdlib.h>
+using namespace std;
+#ifdef _WIN32
+#include <float.h> // _finite
+#define finite _finite
+#endif
+
+#include "Stopwatch.h"
+#include "Fit.h"
+
+/* Use Intel TBB for multithreading */
+#ifdef TBB
+//  #define DEBUG_THREADS  // tbb with output 
+#include "openlab_mod/multithread.h"
+#include "openlab_mod/parallel_for_simpleEqNThr.h"
+#include "openlab_mod/parallel_for_simpleHT.h"
+#include "openlab_mod/parallel_for_simple.h"
+
+#include "tbb/task_scheduler_init.h"
+#include "tbb/parallel_for.h"
+#include "tbb/blocked_range.h"
+using namespace tbb;
+#endif // TBB
+
+#define MUTE
+
+#ifdef OMP
+#include <omp.h>
+#include "pthread.h"
+#include "errno.h"
+#define handle_error_en(en, msg) do { errno = en; perror(msg); exit(EXIT_FAILURE); } while (0)
+#define COPY // copy 1000 tracks as more times as it's needed
+const int NCopy = 1000;
+#endif
+
+#ifdef TBB
+#define COPY // copy 1000 tracks as more times as it's needed
+const int NCopy = 1000;
+#endif
+
+#ifdef OPENCL
+
+#ifdef __APPLE__
+#include <OpenCL/opencl.h>
+#else
+//#define CL_USE_DEPRECATED_OPENCL_1_1_APIS
+#include <CL/cl.h>
+//#include <CL/cl_ext.h>
+//#include <CL/cl.hpp>
+
+#endif
+
+#define COPY // copy 1000 tracks as more times as it's needed
+const int NCopy = 1000;
+
+#define MAX_SOURCE_SIZE (0x100000)
+
+inline void
+checkErr(cl_int err, const char * name)
+{
+  if (err != CL_SUCCESS) {
+    std::cerr << "ERROR: " << name
+              << " (" << err << ")" << std::endl;
+//    exit(EXIT_FAILURE);
+  }
+}
+
+//static clCreateSubDevicesEXT_fn pf_clCreateSubDevicesEXT = (clCreateSubDevicesEXT_fn)clGetExtensionFunctionAddress("clCreateSubDevicesEXT");
+
+#endif
+
+// #include <omp.h>
+
+#include <ctime>
+#include <string>
+string dataDir = "./data/";
+
+
+int tasks = 80;  /* #threads <= #tasks */
+
+#ifdef TBB
+const bool useObserver = 1;  // 1 for use thread-cpu correspondent
+const float speedUpHT = 1.04; // = time1logCore / time2logCoreOn1PhysCore. Need for optimize proc. usage.
+#endif // TBB
+
+#ifdef DEBUG_THREADS
+// const int coeff = 1;
+const int MaxNTracks = 20000;//20000
+const int NFits = 1000;//10;
+const int Ntimes = 1;//int(3000.*coeff);//100;
+#else // if DEBUG_THREADS
+const int NFits = 10;
+#ifdef TBB
+const int MaxNTracks = 80000;
+const int Ntimes = 1;
+#elif defined OMP
+const int MaxNTracks = 80000;
+const int Ntimes = 1;
+#elif defined OPENCL
+const int MaxNTracks = 80000;
+const int Ntimes = 1;
+#else
+//const int MaxNTracks = 20000;
+//const int Ntimes = 10;//int(3000.*coeff);//100;
+const int MaxNTracks = 1000;
+const int Ntimes = 1;//int(3000.*coeff);//100;
+#endif // TBB
+#endif //  ifndef DEBUG_THREADS
+
+Station* vStations;
+
+Track vTracks[MaxNTracks];
+MCTrack vMCTracks[MaxNTracks];
+int NStations = 0;
+int NTracks = 0;
+int NTracksV = 0;
+
+
+
+FieldRegion field0;
+
+void ReadInput(){
+
+  fstream FileGeo, FileTracks;
+
+  FileGeo.open( (dataDir+"geo.dat").c_str(), ios::in );
+  FileTracks.open( (dataDir+"tracks.dat").c_str(), ios::in );
+  {
+    FieldVector H[3];
+    Fvec_t Hz[3];
+    for( int i=0; i<3; i++){
+      float Bx, By, Bz, z;
+      FileGeo >> z >> Bx >> By >> Bz;
+      Hz[i] = z; H[i].X = Bx;   H[i].Y = By; H[i].Z = Bz; 
+#ifndef MUTE
+      cout<<"Input Magnetic field:"<<z<<" "<<Bx<<" "<<By<<" "<<Bz<<endl;
+#endif
+    }
+    field0.Set(H[0],Hz[0], H[1],Hz[1], H[2],Hz[2] );
+  }
+  FileGeo >> NStations;
+#ifndef MUTE
+  cout<<"Input "<<NStations<<" Stations:"<<endl;
+#endif
+  for( int i=0; i<NStations; i++ ){
+    int ist;    
+    FileGeo >> ist;
+    if( ist!=i ) break;
+    Station &st = vStations[i];
+    FileGeo >> st.z >> st.thick>> st.RL;
+#ifndef MUTE
+#ifdef X87
+    cout<<"    "<<st.z <<" "<<st.thick<<" "<<st.RL<<", ";
+#else
+    cout<<"    "<<st.z[0] <<" "<<st.thick[0]<<" "<<st.RL[0]<<", ";
+#endif
+#endif
+    st.zhit = st.z - st.thick/2.f;
+    st.RadThick = st.thick/st.RL;
+    st.logRadThick = log(st.RadThick);
+    int N=0;
+    FileGeo >> N;
+#ifndef MUTE
+    cout<<N<<" field coeff."<<endl;
+#endif
+    for( int i=0; i<N; i++ ) FileGeo >> st.Map.X[i];
+    for( int i=0; i<N; i++ ) FileGeo >> st.Map.Y[i];
+    for( int i=0; i<N; i++ ) FileGeo >> st.Map.Z[i];
+    //for( int i=0; i<10; i++ ){ st.Map.X[i] = st.Map.Y[i] = st.Map.Z[i] = 0.;}
+    //st.Map.X[0]=Bx;
+    //st.Map.Y[0]=By;
+    //st.Map.Z[0]=Bz;
+  }
+  {
+    Fvec_t Hy0 = vStations[NStations-1].Map.Y[0];
+    Fvec_t z0  = vStations[NStations-1].z;
+    Fvec_t sy = 0.f, Sy = 0.f;
+    for( int i=NStations-1; i>=0; i-- ){
+      Station &st = vStations[i];
+      Fvec_t dz = st.z-z0;
+      Fvec_t Hy = vStations[i].Map.Y[0];
+      Sy += dz*sy + dz*dz*Hy/2.f;
+      sy += dz*Hy;
+      st.Sy = Sy;
+      z0 = st.z;
+    }
+  }
+
+  FileGeo.close();
+
+  NTracks = 0;
+  while( !FileTracks.eof() ){
+    
+    int itr;
+    FileTracks>>itr;
+    //if( itr!=NTracks ) break;
+    if( NTracks>=MaxNTracks ) break;
+
+    Track &t = vTracks[NTracks];
+    MCTrack &mc = vMCTracks[NTracks];
+    FileTracks >> mc.MC_x   >> mc.MC_y  >> mc.MC_z 
+         >> mc.MC_px >> mc.MC_py >> mc.MC_pz >> mc.MC_q
+         >> t.NHits;
+    for( int i=0; i<t.NHits; i++ ){
+      int ist;
+      FileTracks >> ist;
+      t.vHits[i].ista = ist;
+      FileTracks >> t.vHits[i].x >> t.vHits[i].y;
+    }
+    if( t.NHits==NStations )   NTracks++;
+  }
+// 	cout << NTracks << " tracks have been read" << endl;
+  FileTracks.close();
+
+#ifdef OMP
+  int threadNumberToCpuMap[80];
+  for(int iProc=0; iProc<4; iProc++)
+  {
+    for(int i=0; i<8; i++){ 
+      threadNumberToCpuMap[2*i+0 + iProc*20] = 4*i + iProc; 
+      threadNumberToCpuMap[2*i+1 + iProc*20] = 4*i + 32 + iProc;
+    }
+    for(int i=0; i<2; i++){
+      threadNumberToCpuMap[2*i+0 + 16 + iProc*20] = 4*i + iProc + 64; 
+      threadNumberToCpuMap[2*i+1 + 16 + iProc*20] = 4*i + 8 + iProc + 64;
+    }
+  }
+#endif
+
+#ifdef COPY
+
+  NTracks = 0;
+
+#ifdef TBB
+//#if 0
+//   static simple_partitioner ap;
+//   parallel_for(blocked_range<int>(0, tasks,1), ApplyMem(vTracks, vMCTracks, &NTracks, NCopy, MaxNTracks), ap);
+  parallel_for_simpleEqNThr(1, tasks, ApplyMem(vTracks, vMCTracks, &NTracks, NCopy, MaxNTracks));
+#else //TBB
+
+  #pragma omp parallel reduction(+:NTracks)
+  {
+    #ifdef OMP
+    int s;
+    cpu_set_t cpuset;
+    int cpuId;
+    #pragma omp critical
+    {
+      cpuId = threadNumberToCpuMap[omp_get_thread_num()];
+    }
+    pthread_t thread  = pthread_self();
+    CPU_ZERO(&cpuset);
+    CPU_SET(cpuId, &cpuset);
+    s = pthread_setaffinity_np(thread, sizeof(cpu_set_t), &cpuset);
+    if (s != 0){ cout << " pthread_setaffinity_np " << endl; handle_error_en(s, "pthread_setaffinity_np");}
+    #endif
+
+    #pragma omp for 
+    for ( int j = 0; j < tasks; ++j ) {
+      for ( int i = 0; i < NCopy; ++i ) {
+        if (j*NCopy+i > MaxNTracks) continue;
+        vTracks[j*NCopy+i] = vTracks[i];
+        vMCTracks[j*NCopy+i] = vMCTracks[i];
+        #pragma omp atomic
+        NTracks++;
+      }
+    }
+  }
+#endif //TBB
+#endif // COPY
+  NTracksV = NTracks/vecN;
+  NTracks =  NTracksV*vecN;
+}
+
+void WriteOutput(){
+  
+  fstream Out, Diff;
+
+  Out.open( (dataDir + "fit.dat").c_str(), ios::out );
+  Diff.open( (dataDir + "fitdiff.dat").c_str(), ios::out );
+  
+  for( int it=0, itt=0; itt<NTracks; itt++ ){
+    Track &t = vTracks[itt];
+    MCTrack &mc = vMCTracks[itt];
+
+    // convert matrix 
+    double C[15];    
+    {
+      Single_t *tC = (Single_t *) &t.C;
+      for( int i=0, n=0; i<5; i++)
+  for( int j=0; j<=i; j++, n++ ){
+    C[n]=0;
+    //for(int k=0; k<5;k++) C[n]+=tC[i*5+k] * tC[j*5+k];
+    C[n] = tC[n];
+  }
+    }
+
+    bool ok = 1;
+    for( int i=0; i<6; i++ ){
+    ok = ok && finite(t.T[i]);
+  }
+    for( int i=0; i<15; i++ ) ok = ok && finite(C[i]);
+
+    if(!ok){ cout<<" infinite "<<endl; continue; }
+
+    Out <<it<<endl<<"   "
+  << " " << mc.MC_x  << " " << mc.MC_y  << " " << mc.MC_z 
+  << " " << mc.MC_px << " " << mc.MC_py << " " << mc.MC_pz 
+  << " " << mc.MC_q<<endl;
+    Out<<"   ";
+    for( int i=0; i<6; i++ ) Out<< " " <<t.T[i];
+    Out<<endl<<"   ";
+    for( int i=0; i<15; i++ ) Out<< " " <<C[i];
+    Out<<endl;
+
+    float tmc[6] = { mc.MC_x, mc.MC_y, mc.MC_px/mc.MC_pz, mc.MC_py/mc.MC_pz, 
+              mc.MC_q/sqrt(mc.MC_px*mc.MC_px+mc.MC_py*mc.MC_py+mc.MC_pz*mc.MC_pz), mc.MC_z};
+    Diff <<it<<endl;
+    Diff<<"   ";
+    for( int i=0; i<6; i++ ) Diff<< " " <<t.T[i]-tmc[i];
+    Diff<<endl<<"   ";
+    for( int i=0; i<15; i++ ) Diff<< " " <<C[i];
+    Diff<<endl;
+    it++;
+  }
+  Out.close();
+  Diff.close();  
+}
+
+
+void FitTracksV(){
+
+#ifdef OMP
+  int threadNumberToCpuMap[80];
+  for(int iProc=0; iProc<4; iProc++)
+  {
+    for(int i=0; i<8; i++){ 
+      threadNumberToCpuMap[2*i+0 + iProc*20] = 4*i + iProc; 
+      threadNumberToCpuMap[2*i+1 + iProc*20] = 4*i + 32 + iProc;
+    }
+    for(int i=0; i<2; i++){
+      threadNumberToCpuMap[2*i+0 + 16 + iProc*20] = 4*i + iProc + 64; 
+      threadNumberToCpuMap[2*i+1 + 16 + iProc*20] = 4*i + 8 + iProc + 64;
+    }
+  }
+#endif
+
+#ifdef OPENCL
+  int threadNumberToCpuMap[80];
+  for(int iProc=0; iProc<4; iProc++)
+  {
+    for(int i=0; i<8; i++){ 
+      threadNumberToCpuMap[2*i+0 + iProc*20] = 4*i + iProc; 
+      threadNumberToCpuMap[2*i+1 + iProc*20] = 4*i + 32 + iProc;
+    }
+    for(int i=0; i<2; i++){
+      threadNumberToCpuMap[2*i+0 + 16 + iProc*20] = 4*i + iProc + 64; 
+      threadNumberToCpuMap[2*i+1 + 16 + iProc*20] = 4*i + 8 + iProc + 64;
+    }
+  }
+#endif
+
+
+  double TimeTable[Ntimes];
+
+  TrackV *TracksV = new TrackV[MaxNTracks / vecN + 1];
+  Fvec_t *Z0      = new Fvec_t[MaxNTracks/vecN+1];
+
+#ifdef VC
+  Fvec_t::Memory Z0mem;
+#endif
+#ifndef MUTE
+  cout<<"Prepare data..."<<endl;
+#endif
+  Stopwatch timer1;
+
+  for( int iV=0; iV<NTracksV; iV++ ){ // loop on set of 4 tracks
+#ifndef MUTE
+    if( iV*vecN%100==0 ) cout<<iV*vecN<<endl;
+#endif
+    TrackV &t = TracksV[iV];
+    for( int ist=0; ist<NStations; ist++ ){
+      HitV &h = t.vHits[ist];
+    
+      h.x = 0.;
+      h.y = 0.;
+      h.w = 0.;
+      h.H.X = 0.;
+      h.H.Y = 0.;
+      h.H.Z = 0.;
+    }
+
+#ifdef VC
+    Fvec_t::Memory hxmem[NStations],hymem[NStations],hwmem[NStations];
+    for( int it=0; it<vecN; it++ ){
+      Track &ts = vTracks[iV*vecN+it];
+
+      Z0mem[it] = vMCTracks[iV*vecN+it].MC_z;
+
+      for( int ista=0, ih=0; ista<NStations; ista++ ){
+        Hit &hs = ts.vHits[ih];
+        if (hs.ista != ista) continue;
+        ih++;
+        HitV &h = t.vHits[hs.ista];
+
+        hxmem[ista][it] = hs.x;
+        hymem[ista][it] = hs.y;
+        hwmem[ista][it] = 1.;
+      }
+
+    }
+    for( int ista=0; ista<NStations; ista++ ){
+      Fvec_t hxtemp( hxmem[ista] );
+      Fvec_t hytemp( hymem[ista] );
+      Fvec_t hwtemp( hwmem[ista] );
+      t.vHits[ista].x = hxtemp;
+      t.vHits[ista].y = hytemp;
+      t.vHits[ista].w = hwtemp;
+    }
+
+
+    Fvec_t Z0temp(Z0mem);
+    Z0[iV] = Z0temp;
+#else // VC
+    
+    for( int it=0; it<vecN; it++ ){
+      Track &ts = vTracks[iV*vecN+it];
+#ifdef X87
+      Z0[iV] = vMCTracks[iV*vecN+it].MC_z;
+#else
+      Z0[iV][it] = vMCTracks[iV*vecN+it].MC_z;
+#endif
+      for( int ih=0; ih<ts.NHits; ih++ ){
+        Hit &hs = ts.vHits[ih];
+        HitV &h = t.vHits[hs.ista];
+    #ifdef X87
+        h.x = hs.x;
+        h.y = hs.y;
+        h.w = 1.;
+    #else
+        h.x[it] = hs.x;
+        h.y[it] = hs.y;
+        h.w[it] = 1.;
+    #endif
+      }
+    }
+#endif // else VC
+
+
+    if (0){    // output for check
+      cout << "track " << iV << "  ";
+      for( int ista=0, ih=0; ista<NStations; ista++ )
+        cout << t.vHits[ista].x << " ";
+      cout << endl;
+    }
+
+
+    for( int ist=0; ist<NStations; ist++ ){
+      HitV &h = t.vHits[ist];
+      vStations[ist].Map.GetField(h.x, h.y, h.H);
+    }
+  }
+  timer1.Stop();
+#ifndef MUTE
+  cout<<"Start fit..."<<endl;
+#endif
+
+#ifdef OPENCL 
+  double total_time = 0;
+#endif
+
+  Stopwatch timer;
+  Stopwatch timer2;
+//   Stopwatch timer_test;
+  timer.Start();
+  for( int times=0; times<Ntimes; times++){
+    timer2.Start();
+#ifdef TBB
+#ifdef DEBUG_THREADS
+  cout << NTracksV << " tracks by " << NTracksV / tasks << " tracks in group are run." << endl;
+#endif // DEBUG_THREADS
+  // FIXME: using affinity_partitioner only gives performance gain with #CPUs > 2
+    // use affinity_partitioner
+//   static simple_partitioner ap;
+//   static affinity_partitioner ap;  // standart
+//   parallel_for(blocked_range<int>(0, NTracksV, NTracksV / tasks), ApplyFit(TracksV, vStations, NStations, NFits), ap);
+    // use auto partitioning. Good then tasks != 2^N
+//  static auto_partitioner ap;
+//  parallel_for(blocked_range<int>(0, NTracksV,NTracksV / tasks), ApplyFit(TracksV, vStations, NStations, NFits), ap);
+
+//    int nTracksVOnThread = NCopy/4;
+//    static simple_partitioner ap;
+//    parallel_for(blocked_range<int>(0, tasks,1), ApplyFit(TracksV, vStations, NStations, NFits, nTracksVOnThread), ap);
+
+  {      // use special partitioning.  Good used with fixed thread-cpu correspondent by observer
+//     if (speedUpHT >= 0){
+//       parallel_for_simpleHT(NTracksV, tasks, ApplyFit(TracksV, vStations, NStations, NFits),speedUpHT);
+//     }
+//     else{
+//       parallel_for_simple(NTracksV, 10, tasks, ApplyFit(TracksV, vStations, NStations, NFits));
+//     };
+
+//     {   // fix nTask on thread
+       int nTracksVOnThread = NCopy/4;
+       parallel_for_simpleEqNThr(1, tasks, ApplyFit(TracksV, vStations, NStations, NFits, nTracksVOnThread));
+       NTracks = nTracksVOnThread*4*tasks; // for time counters
+//     }
+  }
+#elif defined OPENCL
+
+    FILE *fp;
+    char *source_str;
+    size_t source_size;
+
+    fp = fopen("Fit.cl", "r");
+
+    if (!fp) {
+        fprintf(stderr, "Failed to load kernel.\n");
+        exit(1);
+    }
+    source_str = (char*)malloc(MAX_SOURCE_SIZE);
+    source_size = fread( source_str, 1, MAX_SOURCE_SIZE, fp);
+    fclose( fp );
+
+    // Get platform and device information
+    cl_platform_id platform_id = NULL;
+    cl_device_id device_id = NULL;   
+    cl_uint ret_num_devices;
+    cl_uint ret_num_platforms;
+    cl_int ret = clGetPlatformIDs(1, &platform_id, &ret_num_platforms);
+//     ret = clGetDeviceIDs( platform_id, CL_DEVICE_TYPE_ALL, 1, 
+//             &device_id, &ret_num_devices);  
+    checkErr(ret, "clGetPlatformIDs");
+
+    ret = clGetDeviceIDs( platform_id, CL_DEVICE_TYPE_CPU, 1, 
+            &device_id, &ret_num_devices);
+    checkErr(ret, "clGetDeviceIDs");
+
+    cl_uint num_devices_ret;
+    cl_device_id  out_devices[80];
+    const cl_device_partition_property props[] = {CL_DEVICE_PARTITION_EQUALLY, tasks, 0};
+    ret = clCreateSubDevices ( device_id, props, 80 , out_devices , &num_devices_ret );
+    checkErr(ret, "clCreateSubDevices");
+
+    // Create an OpenCL context
+    cl_context context = clCreateContext( NULL, 1, &out_devices[0], NULL, NULL, &ret);
+
+    // Create a command queue
+    cl_command_queue command_queue = clCreateCommandQueue(context, out_devices[0], CL_QUEUE_PROFILING_ENABLE, &ret);
+
+    // Create memory buffers on the device for each vector 
+    cl_mem track_mem_obj = clCreateBuffer(context, CL_MEM_READ_WRITE, 
+            NTracksV * sizeof(TrackV), NULL, &ret);
+    cl_mem station_mem_obj = clCreateBuffer(context, CL_MEM_READ_ONLY,
+            NStations * sizeof(Station), NULL, &ret);
+    cl_mem NStations_mem_obj = clCreateBuffer(context, CL_MEM_READ_ONLY, 
+            sizeof(int), NULL, &ret);
+    cl_mem NFits_mem_obj = clCreateBuffer(context, CL_MEM_READ_ONLY,
+            sizeof(int), NULL, &ret);
+
+    // Copy tracks and stations to their respective memory buffers
+    ret = clEnqueueWriteBuffer(command_queue, track_mem_obj, CL_TRUE, 0,
+            NTracksV * sizeof(TrackV), TracksV, 0, NULL, NULL);
+    checkErr(ret, "clEnqueueWriteBuffer");
+    ret = clEnqueueWriteBuffer(command_queue, station_mem_obj, CL_TRUE, 0, 
+            NStations * sizeof(Station), vStations, 0, NULL, NULL);
+    checkErr(ret, "clEnqueueWriteBuffer");
+    ret = clEnqueueWriteBuffer(command_queue, NStations_mem_obj, CL_TRUE, 0, 
+            sizeof(int), &NStations, 0, NULL, NULL);
+    checkErr(ret, "clEnqueueWriteBuffer");
+    ret = clEnqueueWriteBuffer(command_queue, NFits_mem_obj, CL_TRUE, 0, 
+            sizeof(int), &NFits, 0, NULL, NULL);
+    checkErr(ret, "clEnqueueWriteBuffer");
+
+    // Create a program from the kernel source
+    cl_program program = clCreateProgramWithSource(context, 1, 
+            (const char **)&source_str, (const size_t *)&source_size, &ret);
+
+    // Build the program
+    ret = clBuildProgram(program, 1, &out_devices[0], "-x clc++", NULL, NULL);
+    checkErr(ret, "clBuildProgram");
+    
+    // Shows the log
+    char* build_log;
+    size_t log_size;
+    // First call to know the proper size
+    clGetProgramBuildInfo(program, out_devices[0], CL_PROGRAM_BUILD_LOG, 0, NULL, &log_size);
+    build_log = new char[log_size+1];
+    // Second call to get the log
+    clGetProgramBuildInfo(program, out_devices[0], CL_PROGRAM_BUILD_LOG, log_size, build_log, NULL);
+    build_log[log_size] = '\0';
+    if(log_size > 1)
+      cout << build_log <<  endl;
+    delete[] build_log;
+      
+    // Create the OpenCL kernel
+    cl_kernel kernel = clCreateKernel(program, "vector_add", &ret);
+
+    // Set the arguments of the kernel
+    ret = clSetKernelArg(kernel, 0, sizeof(cl_mem), (void *)&track_mem_obj);
+    ret = clSetKernelArg(kernel, 1, sizeof(cl_mem), (void *)&station_mem_obj);
+    ret = clSetKernelArg(kernel, 2, sizeof(cl_mem), (void *)&NStations_mem_obj);
+    ret = clSetKernelArg(kernel, 3, sizeof(cl_mem), (void *)&NFits_mem_obj);
+
+
+    // Execute the OpenCL kernel on the list
+
+    size_t global_item_size = NTracksV; // Process the entire lists
+//    size_t local_item_size = NCopy/4; // Process in groups of 64
+    size_t local_item_size = 1; // Process in groups of 64
+
+    cl_event event;
+
+    ret = clEnqueueNDRangeKernel(command_queue, kernel, 1, NULL, 
+            &global_item_size, &local_item_size, 0, NULL, &event);
+    checkErr(ret, "clEnqueueNDRangeKernel");
+    
+    ret = clWaitForEvents(1 , &event);
+    checkErr(ret, "clWaitForEvents");
+    
+    // Read the memory buffer track_mem_obj on the device to the local variable TracksV
+    ret = clEnqueueReadBuffer(command_queue, track_mem_obj, CL_TRUE, 0, 
+            NTracksV * sizeof(TrackV), TracksV, 0, NULL, NULL);
+    checkErr(ret, "clEnqueueReadBuffer");
+
+    cl_ulong time_start, time_end;
+    clGetEventProfilingInfo(event, CL_PROFILING_COMMAND_START, sizeof(time_start), &time_start, NULL);
+    clGetEventProfilingInfo(event, CL_PROFILING_COMMAND_END, sizeof(time_end), &time_end, NULL);
+
+    total_time += (time_end - time_start) / (1.e3 * (double)NTracks * (double)NFits);
+//     printf("Parallel time per track [mus] = %0.10f \n", (total_time) );
+ 
+    // Clean up
+    ret = clFlush(command_queue);
+    ret = clFinish(command_queue);
+    ret = clReleaseKernel(kernel);
+    ret = clReleaseProgram(program);
+    ret = clReleaseMemObject(track_mem_obj);
+    ret = clReleaseMemObject(station_mem_obj);
+    ret = clReleaseMemObject(NStations_mem_obj);
+    ret = clReleaseMemObject(NFits_mem_obj);
+    ret = clReleaseCommandQueue(command_queue);
+    ret = clReleaseContext(context);
+#else
+  int ifit;
+  int iV;
+#pragma omp parallel num_threads(tasks) private(iV,ifit) firstprivate(NTracksV,NStations)
+  {
+// #ifdef OMP
+//     int s;
+//     cpu_set_t cpuset;
+//     int cpuId;
+//     #pragma omp critical
+//     {
+//       cpuId = threadNumberToCpuMap[omp_get_thread_num()];
+//     }
+//     pthread_t thread  = pthread_self();
+//     CPU_ZERO(&cpuset);
+//     CPU_SET(cpuId, &cpuset);
+//     s = pthread_setaffinity_np(thread, sizeof(cpu_set_t), &cpuset);
+//     if (s != 0){ cout << " pthread_setaffinity_np " << endl; handle_error_en(s, "pthread_setaffinity_np");}
+// #endif
+    #pragma omp for schedule(guided)
+      for( iV=0; iV<NTracksV; iV++ ){ // loop on set of 4 tracks
+// timer_test.Start();
+        for( ifit=0; ifit<NFits; ifit++){
+           Fit( TracksV[iV], vStations, NStations );      
+         }
+// timer_test.Stop();
+// cout<<"test time = "<<timer_test.RealTime()*1.e6<<" [us]"<<endl;
+      }
+  }
+#endif
+    timer2.Stop();
+    TimeTable[times]=timer2.RealTime();
+  }
+  timer.Stop();
+        
+  
+  for( int iV=0; iV<NTracksV; iV++ ){ // loop on set of 4 tracks
+    TrackV &t = TracksV[iV];
+    ExtrapolateALight( t.T, t.C, Z0[iV], TracksV[iV].T[4], field0 );
+  }
+  
+  double realtime=0;
+  fstream TimeFile;
+  TimeFile.open( (dataDir + "time.dat").c_str(), ios::out );
+  for( int times=0; times<Ntimes; times++ ){
+    TimeFile << TimeTable[times]*1.e6/(NTracks*NFits)<<endl;
+    realtime += TimeTable[times]*1.e6/(NTracks*NFits);
+  }  
+  TimeFile.close();
+  realtime /= Ntimes;
+
+#ifndef MUTE
+  cout<<"Preparation time/track = "<<timer1.CpuTime()*1.e6/NTracks/NFits<<" [us]"<<endl;
+  cout<<"CPU  fit time/track = "<<timer.CpuTime()*1.e6/(NTracks*NFits)/Ntimes<<" [us]"<<endl;
+  cout<<"Real fit time/track = "<<realtime <<" [us]"<<endl;
+  cout<<"Total fit time = "<<timer.CpuTime()<<" [sec]"<<endl;
+  cout<<"Total fit real time = "<<timer.RealTime()<<" [sec]"<<endl;
+
+#elif defined OPENCL
+
+cout<<"Prep[us], CPU fit/tr[us], Real fit/tr[us], CPU[sec], Real[sec] = "<<timer1.CpuTime()*1.e6/NTracks/NFits<<"\t";
+  cout<<total_time/Ntimes <<"\t";
+  cout<<total_time/Ntimes <<"\t";
+  cout<<timer.CpuTime()<<"\t";
+  cout<<timer.RealTime()<<endl;
+
+#else
+	cout<<"Prep[us], CPU fit/tr[us], Real fit/tr[us], CPU[sec], Real[sec] = "<<timer1.CpuTime()*1.e6/NTracks/NFits<<"\t";
+  cout<<timer.CpuTime()*1.e6/(NTracks*NFits)/Ntimes<<"\t";
+  cout<<realtime <<"\t";
+  cout<<timer.CpuTime()<<"\t";
+  cout<<timer.RealTime()<<endl;
+#endif
+  
+  for( int iV=0; iV<NTracksV; iV++ ){ // loop on set of 4 tracks
+    TrackV &t = TracksV[iV];
+    for( int it=0; it<vecN; it++ ){
+      Track &ts = vTracks[iV*vecN+it];
+      Fvec_t *C = (Fvec_t*)&t.C;
+      Single_t *sC = (Single_t*) &ts.C;
+#ifdef X87
+      for( int i=0; i<6; i++ ) ts.T[i] = t.T[i];
+#else
+      for( int i=0; i<6; i++ ) ts.T[i] = t.T[i][it];
+#endif
+
+#ifdef X87
+      for( int i=0; i<15; i++ ) sC[i] = C[i];      
+#else
+      for( int i=0; i<15; i++ ) sC[i] = C[i][it];      
+#endif // X87
+    }    
+  }
+
+  delete [] Z0;
+  delete [] TracksV;
+}
+ 
+
+int main(int argc, char *argv[]){
+
+//   time_t seconds;
+//   seconds = time (NULL);
+//   cout << "Begin NowIs(h:m:s) " << seconds/3600 << ":"  << (seconds/60)%60 << ":" << seconds%60 << endl;
+
+  // RRMOD
+  vStations = new Station[8];
+
+
+  // parse cmdline and set #tasks if TBB or OpenMP
+  if(string(argv[0]).find("omp") != string::npos || string(argv[0]).find("tbb") != string::npos ||
+            string(argv[0]).find("opencl") != string::npos){
+      if(argc != 2){
+      cout << "Please specify #parallel tasks" << endl;
+    return 1;
+    }
+    tasks = atoi( argv[1] );
+  }
+
+#ifdef TBB
+  task_scheduler_init init(tasks);
+  TMyObserver obs;
+  obs.FInit();    // set cpu-threads correspondence
+//  obs.observe(useObserver); // Turn on observer. It's turn off by default.
+#endif
+
+  ReadInput();
+  FitTracksV();
+  WriteOutput();
+#ifndef MUTE
+  cout<<"track size = "<<sizeof(TrackV)<<endl;
+  cout<<"char size = "<<sizeof(char)<<endl;
+#endif
+
+  // RRMOD
+  delete[] vStations;
+
+//   seconds = time (NULL);
+//   cout << "End NowIs(h:m:s) " << seconds/3600 << ":"  << (seconds/60)%60 << ":" << seconds%60 << endl;
+  return 0;
+}
