@@ -6,9 +6,10 @@
 using namespace std;
 
 
+
 class ElasticNetwork {
     public:
-        ElasticNetwork(float alpha, float beta, float K, float* cityX, float* cityY, int numOfCities);
+        ElasticNetwork(float alpha, float beta, float factor, float K , float* cityX, float* cityY, int numOfCities);
         ~ElasticNetwork();
 
         void evolution();
@@ -21,6 +22,8 @@ class ElasticNetwork {
 
     private:
         int numOfCities;
+        int numOfPoints;
+        float factor;
         float alpha, beta;
         float K;
         int K_update;

@@ -5,19 +5,27 @@
 
 // Test
 
-ElasticNetwork::ElasticNetwork(float alpha, float beta, float K, float* cityX, float* cityY, int numOfCities){
+int getNumOfCities(int a) {
+    int b = a;
+    return b;
+}
+
+int getNumOfPoints(int numOfCities, float factor) {
+    return numOfCities * factor;
+}
+
+ElasticNetwork::ElasticNetwork(float alpha, float beta, float factor, float K, float* cityX, float* cityY, int numOfCities){
+    
+    // variables
     this->alpha = alpha;
     this->beta = beta;
     this->K = K;
     this->numOfCities = numOfCities;
-
-
+    this->factor = factor;
     K_update=25;
     radius=0.1;
     num_point_factor=2.5;
-
-    this->num_points = (int)(num_point_factor * numOfCities);
-
+    
     this->cityX = cityX;
     this->cityY = cityY;
 
@@ -32,12 +40,14 @@ ElasticNetwork::~ElasticNetwork(){
 }
 
 fvec ElasticNetwork::calc_denom(fvec pointsX, fvec pointsY, fvec citiesX, fvec citiesY, fvec T) {
-    return exp(-1
-               * (citiesX - pointsX) * (citiesX - pointsX) + (citiesX - pointsX) * (citiesX - pointsX)
-               * (1/T));
+    return exp(-1 * ((citiesX - pointsX) * (citiesX - pointsX) +
+                     (citiesY - pointsY) * (citiesY - pointsY))
+                  * (1/T));
 }
 
-
+//float euclidian_dist(float x1, float y1, float x2, float y2) {
+//    return sqrt(pow((x2 - x1),2) + pow((y2 - y1),2));
+//}
 void ElasticNetwork::evolution(){
     
     // init variables
@@ -47,26 +57,26 @@ void ElasticNetwork::evolution(){
     float delta_y_a_X[num_points];
     float delta_y_a_Y[num_points];
     float numerator, denominator;
+    
 
-    // copy cities from unaligned to aligned array
-    float cityXAligned[numOfCities] __attribute__((aligned(16)));
-    float cityYAligned[numOfCities] __attribute__((aligned(16)));
-    for (int i = 0; i < numOfCities; i++) {
+    // copy cities and points from unaligned to aligned array
+    const int numOfCitiesC = getNumOfCities(numOfCities);
+    float cityXAligned[numOfCitiesC] __attribute__((aligned(16)));
+    float cityYAligned[numOfCitiesC] __attribute__((aligned(16)));
+    for (int i = 0; i < numOfCitiesC; i++) {
         cityXAligned[i] = cityX[i];
         cityYAligned[i] = cityY[i];
     }
-    
-    // copy points from unaligned to aligned array
-    float pointXAligned[num_points] __attribute__((aligned(16)));
-    float pointYAligned[num_points] __attribute__((aligned(16)));
-    for (int i = 0; i < num_points; i++) {
+    const int numOfPointsC = getNumOfPoints(numOfCities, factor);
+    float pointXAligned[numOfPointsC] __attribute__((aligned(16)));
+    float pointYAligned[numOfPointsC] __attribute__((aligned(16)));
+    for (int i = 0; i < numOfPointsC; i++) {
         pointXAligned[i] = pointsX[i];
         pointYAligned[i] = pointsY[i];
     }
     
-
-
     while ((evolution_round < 10000) && (get_max_dist_cities_point() > 0.009)) {
+        
         if (evolution_round % 1000 == 0) cout << "evolution_round: " << evolution_round << ", max dist: " << get_max_dist_cities_point() << endl;
 
 
@@ -82,8 +92,8 @@ void ElasticNetwork::evolution(){
         
         // calculate v_ia for every city i:
         for (int i = 0; i < numOfCities; ++i) {
-            denominator = 0.0;
-            for (int l = 0; l < 100; l++) {
+            for (int l = 0; l < 100000; l++) {
+                denominator = 0.0;
                 for(int j=0; j<num_points; j+=fvecLen) {
                     fvec& pointsXVec = reinterpret_cast<fvec&>(pointXAligned[j]);
                     fvec& pointsYVec = reinterpret_cast<fvec&>(pointYAligned[j]);

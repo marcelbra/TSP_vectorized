@@ -20,14 +20,16 @@ int main(int argc, char *argv[])
 
     // get number of lines from test file
     int number_of_lines = 0;
+    float factor = 2.5;
     string line;
     ifstream myfile(filename);
 
     while (getline(myfile, line)) {
         ++number_of_lines;
     }
+    
 
-    std::cout << "Number of cities in file: " << number_of_lines;
+    std::cout << "Number of cities in file: " << number_of_lines << endl;
 
     // initialize vectors from file
     float cityX[number_of_lines];
@@ -41,9 +43,9 @@ int main(int argc, char *argv[])
         cityX[i-1] = x_coord;
         cityY[i-1] = y_coord;
     }
-
+    
     // initialize net and run
-    ElasticNetwork en = ElasticNetwork(1.0, 1.0, 0.1, cityX, cityY, number_of_lines);
+    ElasticNetwork en = ElasticNetwork(1.0, 1.0, 0.1, factor, cityX, cityY, number_of_lines);
     TStopwatch timer;
 
     
@@ -64,7 +66,7 @@ int main(int argc, char *argv[])
 
     float* roundtrip = en.get_roundtrip();
     int last_visited = 0;
-    for (int j = 0; j < (int)(number_of_lines * 2.5); ++j) {
+    for (int j = 0; j < (int)(number_of_lines * factor); ++j) {
         if (roundtrip[j] != last_visited) {
             cout << "roundtrip visits " << roundtrip[j] << endl;
             last_visited = roundtrip[j];
