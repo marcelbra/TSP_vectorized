@@ -31,22 +31,6 @@ ElasticNetwork::~ElasticNetwork(){
     delete [] pointsY;
 }
 
-// template<typename T> // required calculations
-// T f(T x) {
-//   return sqrt(x);
-// }
-
-
-// fvec ElasticNetwork::calc_denom(fvec pointsX, fvec pointsY, fvec citiesX, fvec citiesY, fvec T) {
-//     return exp(-1 * pow(euclidian_dist(cityX, cityY, pointsX, pointsY),2) * (1/T));
-// }
-
-
-// template<typename T> // required calculations
-// T ElasticNetwork::calc_denom(T pointsX, T pointsY, T citiesX, T citiesY, T t) {
-//     return exp(-1 *    pow()     * (1/t));
-// }
-
 fvec ElasticNetwork::calc_denom(fvec pointsX, fvec pointsY, fvec citiesX, fvec citiesY, fvec T) {
     return exp(-1
                * (citiesX - pointsX) * (citiesX - pointsX) + (citiesX - pointsX) * (citiesX - pointsX)
@@ -56,6 +40,7 @@ fvec ElasticNetwork::calc_denom(fvec pointsX, fvec pointsY, fvec citiesX, fvec c
 
 void ElasticNetwork::evolution(){
     
+    // init variables
     int evolution_round = 0;
     float T = 2 * (K*K);
     float v_ia[numOfCities][num_points];
@@ -63,17 +48,22 @@ void ElasticNetwork::evolution(){
     float delta_y_a_Y[num_points];
     float numerator, denominator;
 
-
-    // amount of points we vectorize / build sum
-//    float points[num_points] __attribute__((aligned(16))); // EN points
-//    float denomSummands[num_points] __attribute__((aligned(16))); // EN points
-//
-//    // copy points from unaligned to aligned array
-//    for (int i = 0; i < num_points; i++) {
-//        points[i] = cityX[i];
-//        denomSummands[i] = cityX[i];
-//    }
-
+    // copy cities from unaligned to aligned array
+    float cityXAligned[numOfCities] __attribute__((aligned(16)));
+    float cityYAligned[numOfCities] __attribute__((aligned(16)));
+    for (int i = 0; i < numOfCities; i++) {
+        cityXAligned[i] = cityX[i];
+        cityYAligned[i] = cityY[i];
+    }
+    
+    // copy points from unaligned to aligned array
+    float pointXAligned[num_points] __attribute__((aligned(16)));
+    float pointYAligned[num_points] __attribute__((aligned(16)));
+    for (int i = 0; i < num_points; i++) {
+        pointXAligned[i] = pointsX[i];
+        pointYAligned[i] = pointsY[i];
+    }
+    
 
 
     while ((evolution_round < 10000) && (get_max_dist_cities_point() > 0.009)) {
@@ -86,23 +76,21 @@ void ElasticNetwork::evolution(){
             T = 2 * (K*K);
         }
 
+        // Fill t array
+        float tArrayAligned[num_points] __attribute__((aligned(16)));;
+        fill_n(tArrayAligned, num_points, T);
         
-        float tArray[num_points];
-        fill_n(tArray, num_points, T);
-        
-        // calculate v_ia:
-        // for every city i:
-        
+        // calculate v_ia for every city i:
         for (int i = 0; i < numOfCities; ++i) {
             denominator = 0.0;
             for (int l = 0; l < 100; l++) {
                 for(int j=0; j<num_points; j+=fvecLen) {
-                    fvec& pointsXVec = reinterpret_cast<fvec&>(pointsX[j]);
-                    fvec& pointsYVec = reinterpret_cast<fvec&>(pointsY[j]);
-                    fvec& citiesXVec = reinterpret_cast<fvec&>(cityX[i]);
-                    fvec& citiesYVec = reinterpret_cast<fvec&>(cityY[i]);
-                    fvec& tVec = reinterpret_cast<fvec&>(tArray[i]);
-                    fvec& denomSummandsVec = reinterpret_cast<fvec&>(tArray[i]); // dummy target vec which needs to initalized
+                    fvec& pointsXVec = reinterpret_cast<fvec&>(pointXAligned[j]);
+                    fvec& pointsYVec = reinterpret_cast<fvec&>(pointYAligned[j]);
+                    fvec& citiesXVec = reinterpret_cast<fvec&>(cityXAligned[i]);
+                    fvec& citiesYVec = reinterpret_cast<fvec&>(cityYAligned[i]);
+                    fvec& tVec = reinterpret_cast<fvec&>(tArrayAligned[i]);
+                    fvec& denomSummandsVec = reinterpret_cast<fvec&>(tArrayAligned[i]); // dummy
                     denomSummandsVec = calc_denom(pointsXVec, pointsYVec, citiesXVec, citiesYVec, tVec);
                     for (int k = 0; k<fvecLen; k++) {
                         denominator += denomSummandsVec[k];
