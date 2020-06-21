@@ -48,13 +48,15 @@ ElasticNetwork::~ElasticNetwork(){
 // }
 
 fvec ElasticNetwork::calc_denom(fvec pointsX, fvec pointsY, fvec citiesX, fvec citiesY, fvec T) {
-    return exp(-1 * sqrt((citiesX - pointsX)*(citiesX - pointsX) + (citiesY - pointsY)) * sqrt((citiesX - pointsX)*(citiesX - pointsX) + (citiesY - pointsY))  * (1/T));
+    return exp(-1
+               * (citiesX - pointsX) * (citiesX - pointsX) + (citiesX - pointsX) * (citiesX - pointsX)
+               * (1/T));
 }
 
 
 void ElasticNetwork::evolution(){
+    
     int evolution_round = 0;
-    //float max_dist_city_point = get_max_dist_cities_point();
     float T = 2 * (K*K);
     float v_ia[numOfCities][num_points];
     float delta_y_a_X[num_points];
@@ -63,14 +65,14 @@ void ElasticNetwork::evolution(){
 
 
     // amount of points we vectorize / build sum
-    float points[num_points] __attribute__((aligned(16))); // EN points
-    float denomSummands[num_points] __attribute__((aligned(16))); // EN points
-
-    // copy points from unaligned to aligned array
-    for (int i = 0; i < num_points; i++) {
-        points[i] = cityX[i];
-        denomSummands[i] = cityX[i];
-    }
+//    float points[num_points] __attribute__((aligned(16))); // EN points
+//    float denomSummands[num_points] __attribute__((aligned(16))); // EN points
+//
+//    // copy points from unaligned to aligned array
+//    for (int i = 0; i < num_points; i++) {
+//        points[i] = cityX[i];
+//        denomSummands[i] = cityX[i];
+//    }
 
 
 
@@ -84,6 +86,10 @@ void ElasticNetwork::evolution(){
             T = 2 * (K*K);
         }
 
+        
+        float tArray[num_points];
+        fill_n(tArray, num_points, T);
+        
         // calculate v_ia:
         // for every city i:
         
@@ -95,11 +101,11 @@ void ElasticNetwork::evolution(){
                     fvec& pointsYVec = reinterpret_cast<fvec&>(pointsY[j]);
                     fvec& citiesXVec = reinterpret_cast<fvec&>(cityX[i]);
                     fvec& citiesYVec = reinterpret_cast<fvec&>(cityY[i]);
-                    fvec& tVec = reinterpret_cast<fvec&>(T);
-                    fvec& denomSummandsVec = reinterpret_cast<fvec&>(T); // dummy target vec which needs to initalized
+                    fvec& tVec = reinterpret_cast<fvec&>(tArray[i]);
+                    fvec& denomSummandsVec = reinterpret_cast<fvec&>(tArray[i]); // dummy target vec which needs to initalized
                     denomSummandsVec = calc_denom(pointsXVec, pointsYVec, citiesXVec, citiesYVec, tVec);
                     for (int k = 0; k<fvecLen; k++) {
-                        denominator += denomSummands[k];
+                        denominator += denomSummandsVec[k];
                     }
                 }
             }
