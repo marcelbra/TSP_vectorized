@@ -5,16 +5,17 @@
 
 // Test
 
-int getNumOfCities(int a) {
+constexpr int getNumOfCities(int a) {
     int b = a;
     return b;
 }
 
-int getNumOfPoints(int numOfCities, float factor) {
+constexpr int getNumOfPoints(int numOfCities, float factor) {
     return numOfCities * factor;
 }
+//ElasticNetwork en = ElasticNetwork(1.0, 1.0, 0.1, factor, cityX, cityY, number_of_lines);
 
-ElasticNetwork::ElasticNetwork(float alpha, float beta, float factor, float K, float* cityX, float* cityY, int numOfCities){
+ElasticNetwork::ElasticNetwork(float alpha, float beta, float K, float factor, float* cityX, float* cityY, int numOfCities){
     
     // variables
     this->alpha = alpha;
@@ -45,28 +46,23 @@ fvec ElasticNetwork::calc_denom(fvec pointsX, fvec pointsY, fvec citiesX, fvec c
                   * (1/T));
 }
 
-//float euclidian_dist(float x1, float y1, float x2, float y2) {
-//    return sqrt(pow((x2 - x1),2) + pow((y2 - y1),2));
-//}
 void ElasticNetwork::evolution(){
     
-    // init variables
-    int evolution_round = 0;
-    float T = 2 * (K*K);
-    float v_ia[numOfCities][num_points];
-    float delta_y_a_X[num_points];
-    float delta_y_a_Y[num_points];
-    float numerator, denominator;
-    
-
-    // copy cities and points from unaligned to aligned array
+    // Copy cities 4 times to aligned array because when we iterate
+    // over the points we want 4-tuples of cities to be held constant
+    // turn numOfCities to runtime constant to initalize array correctly
     const int numOfCitiesC = getNumOfCities(numOfCities);
-    float cityXAligned[numOfCitiesC] __attribute__((aligned(16)));
-    float cityYAligned[numOfCitiesC] __attribute__((aligned(16)));
+    float cityXAligned[numOfCitiesC * fvecLen] __attribute__((aligned(16)));
+    float cityYAligned[numOfCitiesC * fvecLen] __attribute__((aligned(16)));
     for (int i = 0; i < numOfCitiesC; i++) {
-        cityXAligned[i] = cityX[i];
-        cityYAligned[i] = cityY[i];
+        for (int j = 0; j < fvecLen; j++) {
+            cityXAligned[i * fvecLen + j] = cityX[i];
+            cityYAligned[i * fvecLen + j] = cityY[i];
+        }
     }
+    
+    // Copy points to aligned array
+    // We sum over points so we don't hold points constant
     const int numOfPointsC = getNumOfPoints(numOfCities, factor);
     float pointXAligned[numOfPointsC] __attribute__((aligned(16)));
     float pointYAligned[numOfPointsC] __attribute__((aligned(16)));
@@ -75,10 +71,17 @@ void ElasticNetwork::evolution(){
         pointYAligned[i] = pointsY[i];
     }
     
+    // init variables
+    int evolution_round = 0;
+    float T = 2 * (K*K);
+    float v_ia[numOfCitiesC][numOfPointsC];
+    float delta_y_a_X[numOfPointsC];
+    float delta_y_a_Y[numOfPointsC];
+    float numerator, denominator;
+    
     while ((evolution_round < 10000) && (get_max_dist_cities_point() > 0.009)) {
         
         if (evolution_round % 1000 == 0) cout << "evolution_round: " << evolution_round << ", max dist: " << get_max_dist_cities_point() << endl;
-
 
         evolution_round += 1;
         if (evolution_round % K_update == 0) {
@@ -87,19 +90,35 @@ void ElasticNetwork::evolution(){
         }
 
         // Fill t array
-        float tArrayAligned[num_points] __attribute__((aligned(16)));;
-        fill_n(tArrayAligned, num_points, T);
+        float tArrayAligned[numOfPointsC] __attribute__((aligned(16)));;
+        fill_n(tArrayAligned, numOfPointsC, T);
         
         // calculate v_ia for every city i:
         for (int i = 0; i < numOfCities; ++i) {
-            for (int l = 0; l < 100000; l++) {
+            
+//            float denominator_h = 0;
+//            for (int b = 0; b < numOfPointsC; ++b) {
+//                // denominator has to be calculated over all points b:
+//                float cityXp = cityX[i];
+//                float cityYp = cityY[i];
+//                float pointsXp = pointsX[b];
+//                float pointsYp = pointsY[b];
+//                int test = 0;
+//                denominator_h += exp(-1 * pow(euclidian_dist(cityX[i], cityY[i], pointsX[b], pointsY[b]),2) * (1/T));
+//            }
+            
+            
+            for (int l = 0; l < 1; l++) {
                 denominator = 0.0;
-                for(int j=0; j<num_points; j+=fvecLen) {
+                for(int j=0; j<numOfPointsC; j+=fvecLen) {
+                    // iterate of points
                     fvec& pointsXVec = reinterpret_cast<fvec&>(pointXAligned[j]);
                     fvec& pointsYVec = reinterpret_cast<fvec&>(pointYAligned[j]);
+                    fvec& tVec = reinterpret_cast<fvec&>(tArrayAligned[j]);
+                    // keep cities constant
                     fvec& citiesXVec = reinterpret_cast<fvec&>(cityXAligned[i]);
                     fvec& citiesYVec = reinterpret_cast<fvec&>(cityYAligned[i]);
-                    fvec& tVec = reinterpret_cast<fvec&>(tArrayAligned[i]);
+                    // calculate
                     fvec& denomSummandsVec = reinterpret_cast<fvec&>(tArrayAligned[i]); // dummy
                     denomSummandsVec = calc_denom(pointsXVec, pointsYVec, citiesXVec, citiesYVec, tVec);
                     for (int k = 0; k<fvecLen; k++) {
@@ -157,24 +176,32 @@ void ElasticNetwork::evolution(){
 }
 
 void ElasticNetwork::construct_net(){
-    pointsX = new float[num_points];
-    pointsY = new float[num_points];
+//    const int numOfCitiesC = getNumOfCities(numOfCities);
+    const int numOfPointsC = getNumOfPoints(numOfCities, factor);
+    pointsX = new float[numOfPointsC];
+    pointsY = new float[numOfPointsC];
 
-    float step = (2 * M_PI) / (num_points);
+    float step = (2 * M_PI) / (numOfPointsC);
 
-    pointsX[0] = 0;
+    pointsX[0] = 1;
     pointsY[0] = radius;
+//
+//    pointsX[1] = 2;
+//    pointsY[1] = radius * 2;
+//
+//
 
-    for(int i = 1; i < num_points; i++){
+    for(int i = 1; i < numOfPointsC; i++){
+//        pointsX[i] = 1;
         pointsX[i] = -radius * sin(i*step);
         pointsY[i] = radius * cos(i*step);
-        // cout << "X " << pointsX[i] << " Y " << pointsY[i] << endl;
+//        cout << "X " << pointsX[i] << " Y " << pointsY[i] << endl;
     }
 
     normalize(cityX, numOfCities);
     normalize(cityY, numOfCities);
-    normalize(pointsX, num_points);
-    normalize(pointsY, num_points);
+    normalize(pointsX, numOfPointsC);
+    normalize(pointsY, numOfPointsC);
 
 }
 
