@@ -55,14 +55,14 @@ int main(int argc, char *argv[])
     timer.Stop();
     cout << "Total time: " << timer.RealTime() << endl;
 
-    // check results
-//    for (int i = 0; i < number_of_lines; ++i) {
-//        cout << "city at " << en.get_cityX()[i] << "," << en.get_cityY()[i] << endl;
-//    }
+//     check results
+    for (int i = 0; i < number_of_lines; ++i) {
+        cout << "city at " << en.get_cityX()[i] << "," << en.get_cityY()[i] << endl;
+    }
 
-//    for (int j = 0; j < (int)(number_of_lines * 2.5); ++j) {
-//        cout << "point at " << en.get_pointsX()[j] << "," << en.get_pointsY()[j] << endl;
-//    }
+    for (int j = 0; j < (int)(number_of_lines * 2.5); ++j) {
+        cout << "point at " << en.get_pointsX()[j] << "," << en.get_pointsY()[j] << endl;
+    }
 
     float* roundtrip = en.get_roundtrip();
     int last_visited = 0;

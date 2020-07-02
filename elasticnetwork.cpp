@@ -2,15 +2,16 @@
 #include "math.h"
 #include "vectors/P4_F32vec4.h"
 #include <cstdlib>
+#include "omp.h"
 
 // Test
 
-constexpr int getNumOfCities(int a) {
+int getNumOfCities(int a) {
     int b = a;
     return b;
 }
 
-constexpr int getNumOfPoints(int numOfCities, float factor) {
+int getNumOfPoints(int numOfCities, float factor) {
     return numOfCities * factor;
 }
 //ElasticNetwork en = ElasticNetwork(1.0, 1.0, 0.1, factor, cityX, cityY, number_of_lines);
@@ -61,21 +62,21 @@ void ElasticNetwork::evolution(){
     float numerator;
     float denominator = 0;
     
-    while ((evolution_round < 10000) && (get_max_dist_cities_point() > 0.009)) {
-        
-        // Copy cities 4 times to aligned array because when we iterate
-        // over the points we want 4-tuples of cities to be held constant
-        // turn numOfCities to runtime constant to initalize array correctly
-        // This copying needs to happen EVERY evoltion round since city points
-        // Coordinates change after each iteration!
-        float cityXAligned[numOfCitiesC * fvecLen] __attribute__((aligned(16)));
-        float cityYAligned[numOfCitiesC * fvecLen] __attribute__((aligned(16)));
-        for (int i = 0; i < numOfCitiesC; i++) {
-            for (int j = 0; j < fvecLen; j++) {
-                cityXAligned[i * fvecLen + j] = cityX[i];
-                cityYAligned[i * fvecLen + j] = cityY[i];
-            }
+    // Copy cities 4 times to aligned array because when we iterate
+    // over the points we want 4-tuples of cities to be held constant
+    // turn numOfCities to runtime constant to initalize array correctly
+    // This copying needs to happen EVERY evoltion round since city points
+    // Coordinates change after each iteration!
+    float cityXAligned[numOfCitiesC * fvecLen] __attribute__((aligned(16)));
+    float cityYAligned[numOfCitiesC * fvecLen] __attribute__((aligned(16)));
+    for (int i = 0; i < numOfCitiesC; i++) {
+        for (int j = 0; j < fvecLen; j++) {
+            cityXAligned[i * fvecLen + j] = cityX[i];
+            cityYAligned[i * fvecLen + j] = cityY[i];
         }
+    }
+    
+    while ((evolution_round < 10000) && (get_max_dist_cities_point() > 0.009)) {
         
         // Copy points to aligned array
         // We sum over points so we don't hold points constant
@@ -93,6 +94,7 @@ void ElasticNetwork::evolution(){
             K = max(0.01, 0.99*K);
             T = 2 * (K*K);
         }
+        
 
         // calculate v_ia for every city i:
         for (int i = 0; i < numOfCities; ++i) {
@@ -101,16 +103,16 @@ void ElasticNetwork::evolution(){
             float tArrayAligned[numOfPointsC] __attribute__((aligned(16)));;
             fill_n(tArrayAligned, numOfPointsC, T);
             
-            // unvectorized  version of denominator
+//             unvectorized  version of denominator
 //            float denominator_h = 0;
-//            for (int l = 0; l < 100; l++) {
+//            for (int l = 0; l < 1; l++) {
 //                denominator_h = 0;
 //                for (int b = 0; b < numOfPointsC; ++b) {
 //                    denominator_h += exp(-1 * pow(euclidian_dist(cityX[i], cityY[i], pointsX[b], pointsY[b]),2) * (1/T));
 //                }
 //            }
 
-            for (int l = 0; l < 100; l++) {
+            for (int l = 0; l < 1; l++) {
                 denominator = 0.0;
                 for(int j=0; j<numOfPointsC; j+=fvecLen) {
                     // iterate over points
@@ -129,13 +131,27 @@ void ElasticNetwork::evolution(){
                 }
             }
 
+//            cout << "denominator_h: " << denominator_h << endl;
+//            cout << "denominator: " << denominator << endl;
+//            cout << "diff: " << denominator_h - denominator << endl;
+
             // for every point a:
-            for (int a = 0; a < numOfPointsC; ++a) {
-                // numerator can be calculated immediately:
-                numerator = exp(-1 * pow(euclidian_dist(cityX[i], cityY[i], pointsX[a], pointsY[a]),2) * (1/T));
-                // denominator has to be calculated over all points b:
-                v_ia[i][a] = numerator / (denominator + 0.000001);
-            }
+//            int threadId, numThreads, size, start;
+//            #pragma omp parallel default(shared) private(threadId, numThreads, size, start)
+                for (int a = 0; a < numOfPointsC; ++a) {
+//                    threadId = omp_get_thread_num();
+//                    numThreads = omp_get_num_threads();
+//                    size = numOfPointsC / numThreads; // partition size
+//                    start = threadId * size; // start index
+//                    if (threadId == numThreads-1)
+//                        size = numOfPointsC - start;
+//                    setVia(start, size);
+                    // numerator can be calculated immediately:
+                    numerator = exp(-1 * pow(euclidian_dist(cityX[i], cityY[i], pointsX[a], pointsY[a]),2) * (1/T));
+                    // denominator has to be calculated over all points b:
+                    v_ia[i][a] = numerator / (denominator + 0.000001);
+
+                }
         }
 
         // calculate shifts ("Δy_a")
@@ -176,6 +192,10 @@ void ElasticNetwork::evolution(){
 
 }
 
+//void ElasticNetwork::setVia(int start, int size) {
+//    
+//}
+
 void ElasticNetwork::construct_net(){
 //    const int numOfCitiesC = getNumOfCities(numOfCities);
     const int numOfPointsC = getNumOfPoints(numOfCities, factor);
@@ -186,11 +206,7 @@ void ElasticNetwork::construct_net(){
 
     pointsX[0] = 1;
     pointsY[0] = radius;
-//
-//    pointsX[1] = 2;
-//    pointsY[1] = radius * 2;
-//
-//
+
 
     for(int i = 1; i < numOfPointsC; i++){
 //        pointsX[i] = 1;
@@ -272,15 +288,16 @@ float* ElasticNetwork::get_roundtrip() {
     float min_dist_to_city;
 
     // for each point: go through cities and find the closest one -> get its index
-    for (int a = 0; a < num_points; ++a) {
+    for (int a = 0; a < numOfPointsC; ++a) {
         min_dist_to_city = 2.0;
         for (int i = 0; i < numOfCities; ++i) {
             if (euclidian_dist(cityX[i], cityY[i], pointsX[a], pointsY[a]) < min_dist_to_city) {
                 min_dist_to_city = euclidian_dist(cityX[i], cityY[i], pointsX[a], pointsY[a]);
                 closest_city_index = i;
-            } else {
-                closest_city_index = 0;
             }
+//            else {
+//                closest_city_index = 0;
+//            }
             roundtrip[a] = closest_city_index + 1; // in Testfällen fangen Städte mit 1 an
         }
     }
