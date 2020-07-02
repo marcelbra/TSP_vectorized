@@ -13,6 +13,7 @@ class ElasticNetwork {
         ~ElasticNetwork();
 
         void evolution();
+        
         float* get_cityX();
         float* get_cityY();
         float* get_pointsX();

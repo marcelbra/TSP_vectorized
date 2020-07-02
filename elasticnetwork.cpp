@@ -2,6 +2,7 @@
 #include "math.h"
 #include "vectors/P4_F32vec4.h"
 #include <cstdlib>
+#include "/usr/local/Cellar/libomp/10.0.0/include/omp.h"
 #include "omp.h"
 
 // Test
@@ -130,29 +131,32 @@ void ElasticNetwork::evolution(){
                     }
                 }
             }
-
+            
+            // check for difference between scalar and vectorized denominator
 //            cout << "denominator_h: " << denominator_h << endl;
 //            cout << "denominator: " << denominator << endl;
 //            cout << "diff: " << denominator_h - denominator << endl;
 
+            // flag for enabling multithreading
+            bool mt = true;
+            
             // for every point a:
-//            int threadId, numThreads, size, start;
-//            #pragma omp parallel default(shared) private(threadId, numThreads, size, start)
-                for (int a = 0; a < numOfPointsC; ++a) {
-//                    threadId = omp_get_thread_num();
-//                    numThreads = omp_get_num_threads();
-//                    size = numOfPointsC / numThreads; // partition size
-//                    start = threadId * size; // start index
-//                    if (threadId == numThreads-1)
-//                        size = numOfPointsC - start;
-//                    setVia(start, size);
-                    // numerator can be calculated immediately:
-                    numerator = exp(-1 * pow(euclidian_dist(cityX[i], cityY[i], pointsX[a], pointsY[a]),2) * (1/T));
-                    // denominator has to be calculated over all points b:
-                    v_ia[i][a] = numerator / (denominator + 0.000001);
-
+            if (mt) {
+                int threadId, numThreads, steps, start;
+                #pragma omp parallel default(shared) private(threadId, numThreads, steps, start)
+                    for (int a = 0; a < numOfPointsC; ++a) {
+                        threadId = omp_get_thread_num();
+                        numThreads = omp_get_num_threads();
+                        steps = numOfPointsC / numThreads; // partition size
+                        start = threadId * steps; // start index
+                        if (threadId == numThreads-1)
+                            steps = numOfPointsC - start;
+                        for (int j = 0; i < steps; j++) {
+                            numerator = exp(-1 * pow(euclidian_dist(cityX[i], cityY[i], pointsX[a], pointsY[a]),2) * (1/T));
+                            v_ia[i][start + j] = numerator / (denominator + 0.000001);
+                        }
+                    }
                 }
-        }
 
         // calculate shifts ("Δy_a")
         for (int a = 0; a < numOfPointsC; ++a) {
@@ -187,16 +191,12 @@ void ElasticNetwork::evolution(){
             pointsY[a] = pointsY[a] + delta_y_a_Y[a];
         }
 
+        }
     }
-
-
 }
 
-//void ElasticNetwork::setVia(int start, int size) {
-//    
-//}
 
-void ElasticNetwork::construct_net(){
+void ElasticNetwork::construct_net() {
 //    const int numOfCitiesC = getNumOfCities(numOfCities);
     const int numOfPointsC = getNumOfPoints(numOfCities, factor);
     pointsX = new float[numOfPointsC];
