@@ -2,8 +2,8 @@
 #include "math.h"
 #include "vectors/P4_F32vec4.h"
 #include <cstdlib>
-#include "/usr/local/Cellar/libomp/10.0.0/include/omp.h"
 #include "omp.h"
+#include "TStopwatch.h"
 
 // Test
 
@@ -60,8 +60,7 @@ void ElasticNetwork::evolution(){
     float v_ia[numOfCitiesC][numOfPointsC];
     float delta_y_a_X[numOfPointsC];
     float delta_y_a_Y[numOfPointsC];
-    float numerator;
-    float denominator = 0;
+    float denominator;
     
     // Copy cities 4 times to aligned array because when we iterate
     // over the points we want 4-tuples of cities to be held constant
@@ -105,14 +104,14 @@ void ElasticNetwork::evolution(){
             fill_n(tArrayAligned, numOfPointsC, T);
             
 //             unvectorized  version of denominator
-//            float denominator_h = 0;
+//            float denominator = 0;
 //            for (int l = 0; l < 1; l++) {
-//                denominator_h = 0;
+//                denominator = 0;
 //                for (int b = 0; b < numOfPointsC; ++b) {
-//                    denominator_h += exp(-1 * pow(euclidian_dist(cityX[i], cityY[i], pointsX[b], pointsY[b]),2) * (1/T));
+//                    denominator += exp(-1 * pow(euclidian_dist(cityX[i], cityY[i], pointsX[b], pointsY[b]),2) * (1/T));
 //                }
 //            }
-
+            
             for (int l = 0; l < 1; l++) {
                 denominator = 0.0;
                 for(int j=0; j<numOfPointsC; j+=fvecLen) {
@@ -131,32 +130,35 @@ void ElasticNetwork::evolution(){
                     }
                 }
             }
-            
-            // check for difference between scalar and vectorized denominator
+
 //            cout << "denominator_h: " << denominator_h << endl;
 //            cout << "denominator: " << denominator << endl;
 //            cout << "diff: " << denominator_h - denominator << endl;
 
-            // flag for enabling multithreading
-            bool mt = true;
-            
-            // for every point a:
-            if (mt) {
-                int threadId, numThreads, steps, start;
-                #pragma omp parallel default(shared) private(threadId, numThreads, steps, start)
-                    for (int a = 0; a < numOfPointsC; ++a) {
-                        threadId = omp_get_thread_num();
-                        numThreads = omp_get_num_threads();
-                        steps = numOfPointsC / numThreads; // partition size
-                        start = threadId * steps; // start index
-                        if (threadId == numThreads-1)
-                            steps = numOfPointsC - start;
-                        for (int j = 0; i < steps; j++) {
-                            numerator = exp(-1 * pow(euclidian_dist(cityX[i], cityY[i], pointsX[a], pointsY[a]),2) * (1/T));
-                            v_ia[i][start + j] = numerator / (denominator + 0.000001);
-                        }
-                    }
+//
+            const int NThreads = 2;
+            omp_set_num_threads(NThreads);
+            int threadId, numThreads, steps, start;
+            #pragma omp parallel default(shared) private(threadId, numThreads, steps, start)
+            {
+                threadId = omp_get_thread_num();
+                numThreads = omp_get_num_threads();
+                steps = numOfPointsC / NThreads; // partition size
+                start = threadId * steps; // start index
+                if (threadId == numThreads-1)
+                   steps = numOfPointsC - start;
+                for (int j = 0; j < steps; j++) {
+                    v_ia[i][start + j] = exp(-1 * pow(euclidian_dist(cityX[i], cityY[i], pointsX[start + j], pointsY[start + j]),2) * (1/T)) / (denominator + 0.000001);
                 }
+            }
+
+//
+//            for (int a = 0; a < numOfPointsC; ++a) {
+//                v_ia[i][a] =  exp(-1 * pow(euclidian_dist(cityX[i], cityY[i], pointsX[a], pointsY[a]),2) * (1/T)) / (denominator + 0.000001);
+//            }
+            
+            
+        }
 
         // calculate shifts ("Δy_a")
         for (int a = 0; a < numOfPointsC; ++a) {
@@ -191,12 +193,13 @@ void ElasticNetwork::evolution(){
             pointsY[a] = pointsY[a] + delta_y_a_Y[a];
         }
 
-        }
     }
+
+
 }
 
 
-void ElasticNetwork::construct_net() {
+void ElasticNetwork::construct_net(){
 //    const int numOfCitiesC = getNumOfCities(numOfCities);
     const int numOfPointsC = getNumOfPoints(numOfCities, factor);
     pointsX = new float[numOfPointsC];
@@ -304,9 +307,3 @@ float* ElasticNetwork::get_roundtrip() {
     return roundtrip;
 
 }
-
-
-
-
-
-
