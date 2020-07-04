@@ -15,7 +15,7 @@ int main(int argc, char *argv[])
     //MainWindow w;
     //w.show();
 
-
+    //string filename = "/Users/olemaiwald/Desktop/TSP_vectorized/test1.txt";
     string filename = "/Users/marcelbraasch/Documents/Developer/TSP_vectorized/test1.txt";
 
     // get number of lines from test file
